@@ -1,0 +1,118 @@
+body {
+  margin: 0;
+  font-family: 'nanumsquare';
+}
+div {
+  box-sizing: border-box;
+}
+p {
+  font-size: 16px;
+}
+h1 {
+  font-size: 35px;
+}
+h4 {
+  font-size: 22px;
+}
+h5 {
+  font-size: 20px;
+}
+.blank-box {
+  margin: auto;
+  display: inline-block;
+}
+.btns {
+  color: white;
+  background-color: #ff6d60;
+  padding: 10px 50px;
+  border: none;
+  border-radius: 20px;
+}
+
+.btns:hover {
+  background-color: #f7d060;
+}
+
+/* nav 로그인/회원가입 버튼 */
+.container-fluid button {
+  background-color: transparent;
+  border: none;
+  display: none;
+}
+.main-nav-blank {
+  margin: auto;
+}
+.main-nav-user span {
+  margin-right: 10px;
+  font-weight: 600;
+}
+.main-header {
+  padding-top: 60px;
+
+  background-image: url('https://i.pinimg.com/564x/75/28/f6/7528f619a534a54502dfb0b262c96870.jpg');
+  background-position: center;
+  background-size: cover;
+
+  width: 100%;
+  height: 300px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+.main-header button {
+  margin-top: 18px;
+}
+.post-bg {
+  /* background-color: lightgreen; */
+  display: none;
+  width: 100%;
+  padding: 10px;
+}
+.post-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+.post-box {
+  background-color: white;
+  width: 500px;
+  padding: 30px 30px;
+  margin: 30px auto;
+  box-shadow: 0 0 3px 3px lightslategray;
+  border-radius: 20px;
+}
+
+.post-weather-wrapper div {
+  display: inline-block;
+}
+.post-url-wrapper,
+.post-weather-wrapper {
+  width: 100%;
+  padding: 5px;
+  margin-bottom: 15px;
+  text-align: center;
+}
+.post-select-weather {
+  float: right;
+  margin-right: 7px;
+}
+.post-url-wrapper input {
+  padding: 10px 15px;
+  width: 75%;
+  float: right;
+  margin-right: 7px;
+  border-radius: 10px;
+  border: 1px solid grey;
+}
+.post-container button {
+  margin-top: 20px;
+}
+.post-select-weather i {
+  font-size: 25px;
+  margin-left: 5px;
+}
+.post-select-weather input {
+  margin-left: 15px;
+}
