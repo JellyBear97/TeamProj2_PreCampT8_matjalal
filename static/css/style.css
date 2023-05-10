@@ -1,0 +1,399 @@
+/* 이지은 */
+body {
+  margin: 0;
+  font-family: 'nanumsquare';
+}
+
+div {
+  box-sizing: border-box;
+}
+
+p {
+  font-size: 16px;
+}
+
+h1 {
+  font-size: 35px;
+}
+
+h4 {
+  font-size: 22px;
+}
+
+h5 {
+  font-size: 20px;
+}
+
+.blank-box {
+  margin: auto;
+  display: inline-block;
+}
+
+.btns {
+  color: white;
+  background-color: #ff6d60;
+  padding: 10px 50px;
+  border: none;
+  border-radius: 20px;
+}
+
+.btns:hover {
+  background-color: #f7d060;
+}
+
+/* nav 로그인/회원가입 버튼 */
+.container-fluid button {
+  background-color: transparent;
+  border: none;
+  display: none;
+}
+
+.main-nav-blank {
+  margin: auto;
+}
+
+.main-nav-user span {
+  margin-right: 10px;
+  font-weight: 600;
+}
+
+.main-header {
+  padding-top: 60px;
+
+  background-image: url('https://i.pinimg.com/564x/75/28/f6/7528f619a534a54502dfb0b262c96870.jpg');
+  background-position: center;
+  background-size: cover;
+
+  width: 100%;
+  height: 300px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.main-header button {
+  margin-top: 18px;
+}
+
+.post-bg {
+  /* background-color: lightgreen; */
+  display: none;
+  width: 100%;
+  padding: 10px;
+}
+
+.post-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.post-box {
+  background-color: white;
+  width: 500px;
+  padding: 30px 30px;
+  margin: 30px auto;
+  box-shadow: 0 0 3px 3px lightslategray;
+  border-radius: 20px;
+}
+
+.post-weather-wrapper div {
+  display: inline-block;
+}
+
+.post-url-wrapper,
+.post-weather-wrapper,
+.post-comment {
+  width: 100%;
+  padding: 5px;
+  margin-bottom: 15px;
+  text-align: center;
+}
+
+.post-select-weather {
+  float: right;
+  margin-right: 7px;
+}
+
+.post-url-wrapper input,
+.post-comment textarea {
+  padding: 10px 15px;
+  width: 77%;
+  float: right;
+  margin-right: 7px;
+  border-radius: 10px;
+  border: 1px solid grey;
+}
+
+.post-comment textarea {
+  width: 87%;
+  height: 80px;
+  resize: none;
+}
+
+.post-container button {
+  margin-top: 20px;
+}
+
+.post-select-weather i {
+  font-size: 25px;
+  margin-left: 5px;
+}
+
+.post-select-weather input {
+  margin-left: 15px;
+}
+
+/* 이다혜 */
+* {
+    box-sizing: border-box;
+  }
+  
+  ::selection {
+    background: tomato;
+    color: #fff;
+  }
+  
+  .todays-weather {
+    background-color: #f7f7f7;
+    padding: 30px 0;
+    text-align: center;
+  }
+  
+  .todays-weather i {
+    margin-left: 20px;
+    margin-right: 10px;
+  }
+  
+  body>div.weather-nav {
+    width: 100%;
+    margin: 50px auto;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+  
+  body>div.weather-nav>label {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-right: 15px;
+  }
+  
+  body>div.weather-nav>label:last-child {
+    margin-right: 0;
+  }
+  
+  /* 버튼 기본 색상 지정 */
+  :root {
+    --basic: #cdcdcd;
+    --sunny: #ff9451;
+    --cloudy: #59839e;
+    --rainy: #517aff;
+    --snowy: #9864f1;
+  }
+  
+  /* 선택되지 않은 것 */
+  .btn-outline-primary {
+    --bs-btn-color: var(--basic);
+    --bs-btn-border-color: var(--basic);
+  }
+  
+  /* 날씨별 색상 */
+  .btn-outline-primary.sunny {
+    --bs-btn-hover-bg: var(--sunny);
+    --bs-btn-hover-border-color: var(--sunny);
+    --bs-btn-active-bg: var(--sunny);
+    --bs-btn-active-border-color: var(--sunny);
+  }
+  
+  .btn-outline-primary.cloudy {
+    --bs-btn-hover-bg: var(--cloudy);
+    --bs-btn-hover-border-color: var(--cloudy);
+    --bs-btn-active-bg: var(--cloudy);
+    --bs-btn-active-border-color: var(--cloudy);
+  }
+  
+  .btn-outline-primary.rainy {
+    --bs-btn-hover-bg: var(--rainy);
+    --bs-btn-hover-border-color: var(--rainy);
+    --bs-btn-active-bg: var(--rainy);
+    --bs-btn-active-border-color: var(--rainy);
+  }
+  
+  .btn-outline-primary.snowy {
+    --bs-btn-hover-bg: var(--snowy);
+    --bs-btn-hover-border-color: var(--snowy);
+    --bs-btn-active-bg: var(--snowy);
+    --bs-btn-active-border-color: var(--snowy);
+  }
+  
+  @keyframes rotate-icon {
+    from {
+      transform: rotate(0);
+    }
+  
+    to {
+      transform: rotateY(360deg);
+    }
+  }
+  
+  .btn-outline-primary:hover i {
+    animation: rotate-icon 1s linear infinite;
+  }
+  
+  /* 게시글 (cards) */
+  .cards {
+    width: 85%;
+    margin: auto;
+  }
+  
+  .card {
+    position: relative;
+  }
+  
+  .card-weather {
+    position: absolute;
+    right: 10px;
+    top: 10px;
+  
+    width: 35px;
+    height: 35px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 50%;
+  
+    color: #fff;
+    font-size: 14px;
+  }
+  
+  .card-weather.sunny {
+    background-color: var(--sunny);
+  }
+  
+  .card-weather.cloudy {
+    background-color: var(--cloudy);
+  }
+  
+  .card-weather.rainy {
+    background-color: var(--rainy);
+  }
+  
+  .card-weather.snowy {
+    background-color: var(--snowy);
+  }
+  
+  .card-weather i {
+    animation: rotate-icon 4s linear infinite;
+  }
+  
+  .card-body {
+    padding: 20px;
+  }
+  
+  .card-img,
+  .card-img-bottom,
+  .card-img-top {
+    height: 100%;
+  }
+  
+  .card-title {
+    font-weight: 600;
+  }
+  
+  .card-address {
+    font-size: 12px;
+    color: #888;
+  }
+  
+  .card-comment {
+    height: 100px;
+    overflow: auto;
+  }
+  
+  .card-comment::-webkit-scrollbar {
+    display: none;
+  }
+  
+  .card-footer {
+    cursor: pointer;
+    transition: 0.3s;
+  }
+  
+  .card-footer:hover {
+    background-color: rgba(87, 87, 87, 0.1);
+  }
+  
+  .text-muted {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+  }
+  
+  .text-muted i {
+    margin-right: 3px;
+  }
+
+  /* 박지혜 모달 */
+  .wrapper {
+    background-color: #efefef;
+    border: 1px solid gray;
+    border-radius: 15px;
+    width: 870px;
+    height: 500px;
+    display: flex;
+  }
+  
+  .image {
+    width: 497px;
+    height: 500px;
+    overflow: hidden;
+  }
+  
+  .desc {
+    width: 350px;
+  }
+  
+  .info {
+    padding-left: 10px;
+  }
+  
+  .title {
+    display: flex;
+    align-items: center;
+  }
+  
+  .star {
+    padding: 10px;
+  }
+  
+  .addr {
+    color: gray;
+    margin: 0px;
+  }
+  
+  .review {
+    height: 200px;
+  }
+  
+  .comment {
+    width: 373px;
+    border-top: 1px solid black;
+    padding-top: 10px;
+  }
+  
+  .comment-box {
+    padding-left: 10px;
+  }
+  
+  .btn-chat:hover {
+    cursor: pointer;
+  }
+
+  /* 이안진 로그인창 */
