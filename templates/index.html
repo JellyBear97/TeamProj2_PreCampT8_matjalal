@@ -135,6 +135,18 @@
                 <i class="fa-solid fa-snowflake" for="select-snowy" style="color: #9864f1"></i>
               </div>
             </div>
+            <div class="post-weather-wrapper">
+              <span>음식종류를 선택해주세요: </span>
+              <div class="blank-box"></div>
+              <div class="post-select-weather" id="select-foodtype">
+                <input name="post-select-foodtype" type="radio" id="select-alltype" value="1" /><span>전체</span>
+                <input name="post-select-foodtype" type="radio" id="select-korea" value="2" /><span>한식</span>
+                <input name="post-select-foodtype" type="radio" id="select-usa" value="3" /><span>양식</span>
+                <input name="post-select-foodtype" type="radio" id="select-china" value="4" /><span>중식</span>
+                <input name="post-select-foodtype" type="radio" id="select-japan" value="5" /><span>일식</span>
+                <input name="post-select-foodtype" type="radio" id="select-exctype" value="6" /><span>기타</span>
+              </div>
+            </div>
             <!-- 추천 메뉴명 적기 -->
             <div class="post-comment">
               <span>추천하는 메뉴명 : </span>
@@ -229,6 +241,59 @@
       <label class="btn btn-outline-primary snowy" for="snowy">
         <i class="fa-solid fa-snowflake"></i>
       </label>
+    </div>
+
+    <!-- 음식 type 카테고리 by 선아님 -->
+    <div class="food-nav" role="group" aria-label="Basic radio toggle button group">
+      <div>
+        <input type="radio" class="btn-check weather-btn" name="foodtype" id="all_type" autocomplete="off" />
+        <label class="btn btn-outline-primary all" for="all_type">
+          <img src="./icon/전체.png" alt="" />
+          <!-- <i class="fa-solid fa-sun"></i> -->
+        </label>
+        <p>전체</p>
+      </div>
+
+      <div>
+        <input type="radio" class="btn-check weather-btn" name="foodtype" id="korean" autocomplete="off" />
+        <label class="btn btn-outline-primary korean" for="korean">
+          <img src="./icon/한식.png" alt="" />
+          <!-- <i class="fa-solid fa-sun"></i> -->
+        </label>
+        <p>한식</p>
+      </div>
+      <div>
+        <input type="radio" class="btn-check weather-btn" name="foodtype" id="usa" autocomplete="off" />
+        <label class="btn btn-outline-primary usa" for="usa">
+          <img src="./icon/양식.png" alt="" />
+          <!-- <i class="fa-solid fa-sun"></i> -->
+        </label>
+        <p>양식</p>
+      </div>
+      <div>
+        <input type="radio" class="btn-check weather-btn" name="foodtype" id="china" autocomplete="off" />
+        <label class="btn btn-outline-primary china" for="china">
+          <img src="./icon/중식.png" alt="" />
+          <!-- <i class="fa-solid fa-sun"></i> -->
+        </label>
+        <p>중식</p>
+      </div>
+      <div>
+        <input type="radio" class="btn-check weather-btn" name="foodtype" id="japan" autocomplete="off" />
+        <label class="btn btn-outline-primary japan" for="japan">
+          <img src="./icon/일식.png" alt="" />
+          <!-- <i class="fa-solid fa-sun"></i> -->
+        </label>
+        <p>일식</p>
+      </div>
+      <div>
+        <input type="radio" class="btn-check weather-btn" name="foodtype" id="esc_type" autocomplete="off" />
+        <label class="btn btn-outline-primary esc" for="esc_type">
+          <img src="./icon/기타.png" alt="" />
+          <!-- <i class="fa-solid fa-sun"></i> -->
+        </label>
+        <p>기타</p>
+      </div>
     </div>
 
     <!-- 게시글 더미 -->

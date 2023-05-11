@@ -20,6 +20,7 @@ function posting() {
   let menu = $('#menu_title').val();
   let img = $('#food_img_url').val();
   let comment = $('#comment').val();
+  let foodtype = $('#select-foodtype input[type="radio"]:checked').val();
 
   // form의 유효성 검사
   if (!weather) {
@@ -44,6 +45,7 @@ function posting() {
   formData.append('menu_give', menu);
   formData.append('img_give', img);
   formData.append('comment_give', comment);
+  formData.append('foodtype_give', foodtype);
 
   fetch('/foodlist', { method: 'POST', body: formData })
     .then((res) => res.json())

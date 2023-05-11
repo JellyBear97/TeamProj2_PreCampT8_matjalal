@@ -23,12 +23,14 @@ def login():
 @app.route("/foodlist", methods=["POST"])
 def foodlist_post():
     weather_receive = request.form["weather_give"]
+    foodtype_receive = request.form["foodtype_give"]
     menu_receive = request.form["menu_give"]
     img_receive = request.form["img_give"]
     comment_receive = request.form["comment_give"]
 
     doc = {
         'weather': weather_receive,
+        'foodtype' : foodtype_receive,
         'menu': menu_receive,
         'img': img_receive,
         'comment': comment_receive
