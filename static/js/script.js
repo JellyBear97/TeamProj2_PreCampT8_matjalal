@@ -1,139 +1,201 @@
-//   김선아
-$(document).ready(function (event) {
-   show_order();
+$(document).ready(function () {
   set_temp();
   post();
+  show_order();
 });
 
-//   이지은님 헤더쪽
 function post() {
-  $("#post-close").on("click", function () {
-    $("#post-box").hide();
+  // 음식 추천하기 버튼
+  $('#post-start').on('click', function () {
+    $('#post-box').toggle();
   });
-  $("#post-start").on("click", function () {
-    $("#post-box").show();
+  // CLOSE 버튼
+  $('#post-close').on('click', function () {
+    $('#post-box').hide();
   });
 }
 
-// // 날씨 API FETCH로 가져오기
-function set_temp() {
-  fetch("http://spartacodingclub.shop/sparta_api/weather/seoul")
+function posting() {
+  let weather = $('#select-weather input[type="radio"]:checked').val();
+  let menu = $('#menu_title').val();
+  let img = $('#food_img_url').val();
+  let comment = $('#comment').val();
+
+  // form의 유효성 검사
+  if (!weather) {
+    alert('날씨를 선택해주세요.');
+    return;
+  }
+  if (!menu) {
+    alert('메뉴를 입력해주세요.');
+    return;
+  }
+  // if (!img) {
+  //   alert("이미지 URL을 입력해주세요.");
+  //   return;
+  // }
+  if (!comment) {
+    alert('한줄평을 입력해주세요.');
+    return;
+  }
+
+  let formData = new FormData();
+  formData.append('weather_give', weather);
+  formData.append('menu_give', menu);
+  formData.append('img_give', img);
+  formData.append('comment_give', comment);
+
+  fetch('/foodlist', { method: 'POST', body: formData })
     .then((res) => res.json())
     .then((data) => {
-      let temp = data["temp"];
-      let city = data["city"];
-      let clouds = data["clouds"];
-      let icon = data["icon"];
-      temp_html = ``;
-      if (temp > 20) {
-        temp_html = `
-
-`;
-      } else {
-        temp_html = `
-
-`;
-      }
-
-      $("#temp").text(temp);
+      alert(data['msg']);
+      window.location.reload();
     });
 }
+
+// 카테고리 상관없이 모든 foodlist 가져오기
 function show_order() {
-  // GET 요청 확인 fetch 코드 (READ)
-  fetch("/test")
+  fetch('/foodlist')
     .then((res) => res.json())
     .then((data) => {
-      console.log(data);//'msg': '이 요청은 GET!'
-      // alert(data["msg"]); //'msg': '이 요청은 GET!'
+      console.log(data);
+      // alert(data["msg"]);
 
-      let rows = data["result"];
+      let rows = data['result'];
       console.log(rows);
-      $(".cards  ").empty();
+
+      // ! 잠시 none
+      $('.cards  ').empty();
       rows.forEach((a) => {
         console.log(a);
-        let desc = a["desc"];
-        let image = a["image"];
-        let title = a["title"];
-        let comment = a["comment"];
-        let weather=a["weather"]
-        let star = a["star"];
-        let star_num = "⭐".repeat(star);
-        console.log(desc, image, title, comment, star_num);
+        let menu = a['menu'];
+        let img = a['img'];
+        let comment = a['comment'];
+        let p_id = a['_id'];
+        let weather = a['weather'];
+        let weather_span = '';
+        let weather_i = '';
+        if (weather == 1) {
+          weather_span = 'sunny';
+          weather_i = 'sun';
+        } else if (weather == 2) {
+          weather_span = 'cloudy';
+          weather_i = 'cloud';
+        } else if (weather == 3) {
+          weather_span = 'rainy';
+          weather_i = 'umbrella';
+        } else if (weather == 4) {
+          weather_span = 'snowy';
+          weather_i = 'snowflake';
+        }
 
-        let temp_html = `<div class="col">
-        <div class="card h-80">
-          <span class="card-weather sunny">
-            <i class="fa-solid fa-sun"></i>
-          </span>
-          <img src="${image}">
+        console.log(weather, menu, comment, img, p_id, weather_span, weather_i);
 
-          <div class="card-body">
-            <h5 class="card-title">${title}</h5>
-            <p class="card-star">${star_num}</p>
-            <p class="card-address">${star_num}</p>
-            <p class="card-comment">
-            ${comment}
-            </p>
-          </div>
-          <div class="card-footer more">
-            <small class="text-muted"><i class="fa-solid fa-plus"></i>더보기</small>
-          </div>
-        </div>
-      </div>
-      `;
-        $(".cards  ").append(temp_html);
+        let temp_html = `
+                        <div class="col" id=${p_id}>
+                          <div class="card h-80">
+                            <span class="card-weather ${weather_span}">
+                              <i class="fa-solid fa-${weather_i}"></i>
+                            </span>
+                            <img
+                              src="${img}"
+                              class="card-img-top"
+                              alt="음식 대표사진" />
+
+                            <div class="card-body">
+                              <h5 class="card-title">${menu}</h5>
+                              <p class="card-comment">${comment}</p>
+                            </div>
+                            <div class="card-footer more">
+                              <small class="text-muted"><i class="fa-solid fa-plus"></i>더보기</small>
+                            </div>
+                          </div>
+                        </div>
+                        `;
+        $('#cards').append(temp_html);
       });
     });
 }
 
-// 날씨에 따른 맛집 평점 가져오기
-function save_order(){
-// event.preventDefault();
-let url = $("#restaurant-url").val();
-// https://congsong.tistory.com/42
-let weather = $('input[type="radio"]:checked').val(); // 체크된 값(checked value)
-let comment = $("#restaurant-comment").val();
+// weather 카테고리 클릭시 - foodlist 불러오기
+function showByWeather(weather_value) {
+  // fetch('/foodlist/weather')
+  fetch(`/foodlist/weather?weather_value=${weather_value}`)
+    .then((res) => res.json())
+    .then((data) => {
+      console.log(data);
+      // alert(data["msg"]);
 
-console.log(url, weather, comment);
-// post 요청 확인 fetch 코드(CREATE,UPDATE,DELATE)
-let formData = new FormData();
-formData.append("url_give", url);
-formData.append("weather_give", weather);
-formData.append("comment_give", comment);
+      let rows = data['result'];
+      console.log(rows);
 
-fetch("/test", { method: "POST", body: formData })
-  .then((res) => res.json())
-  .then((data) => {
-    // console.log(data["msg"]);
-    // alert(data["msg"]);
-//  window.location.reload()
-});
+      // ! 잠시 none
+      $('.cards  ').empty();
+      rows.forEach((a) => {
+        console.log(a);
+        let menu = a['menu'];
+        let img = a['img'];
+        let comment = a['comment'];
+        let p_id = a['_id'];
+        let weather = a['weather'];
+        let weather_span = '';
+        let weather_i = '';
+        if (weather == 1) {
+          weather_span = 'sunny';
+          weather_i = 'sun';
+        } else if (weather == 2) {
+          weather_span = 'cloudy';
+          weather_i = 'cloud';
+        } else if (weather == 3) {
+          weather_span = 'rainy';
+          weather_i = 'umbrella';
+        } else if (weather == 4) {
+          weather_span = 'snowy';
+          weather_i = 'snowflake';
+        }
 
-// JSON 자료 불러와서 자료형으로 나누기
-// fetch("http://spartacodingclub.shop/sparta_api/seoulair")
-//   .then((res) => res.json())
-//   .then((data) => {
-//     let rows = data["RealtimeCityAir"]["row"];
-//     rows.forEach((a) => {
-//       let gue_name = a["MSRSTE_NM"];
-//       let gue_mise = a["IDEX_MVL"];
+        console.log(weather, menu, comment, img, p_id, weather_span, weather_i);
 
-//       //   별점
-//       // let star_num="⭐".repeat(star)
-//       //   별점
+        let temp_html = `
+                      <div class="col" id=${p_id}>
+                        <div class="card h-80">
+                          <span class="card-weather ${weather_span}">
+                            <i class="fa-solid fa-${weather_i}"></i>
+                          </span>
+                          <img
+                            src="${img}"
+                            class="card-img-top"
+                            alt="음식 대표사진" />
 
-//       console.log(gue_name, gue_mise);
-//       let temp_html = ``;
+                          <div class="card-body">
+                            <h5 class="card-title">${menu}</h5>
+                            <p class="card-comment">${comment}</p>
+                          </div>
+                          <div class="card-footer more">
+                            <small class="text-muted"><i class="fa-solid fa-plus"></i>더보기</small>
+                          </div>
+                        </div>
+                      </div>
+                      `;
+        $('#cards').append(temp_html);
+      });
+    });
+}
 
-//       if (gue_mise > 40) {
-//         temp_html = `<li class=bad>${gue_name} : ${gue_mise}</li>`;
-//       } else {
-//         temp_html = `<li >${gue_name} : ${gue_mise}</li>`;
-//       }
+// 날씨 불러오기
+function set_temp() {
+  fetch('http://spartacodingclub.shop/sparta_api/weather/seoul')
+    .then((res) => res.json())
+    .then((data) => {
+      console.log(data);
+      let temp = data['temp'].toFixed(1);
+      let city = data['city'];
+      let clouds = data['clouds'];
+      let iconurl = data['icon'];
 
-//       $("#names-q1").append(temp_html);
-//     });
-//   });
-
-
+      $('#temp').text(temp);
+      $('#city').text(city);
+      $('#clouds').text(clouds);
+      $('#icon').attr('src', iconurl);
+    });
 }

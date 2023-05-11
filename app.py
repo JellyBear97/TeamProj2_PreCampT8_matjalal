@@ -1,30 +1,4 @@
-# 물어보기
-# https://chat.openai.com/?model=text-davinci-002-render
-# https://stackoverflow.com/questions?newreg=79bb94ac255544138b19b86ae17d97e5
-
-# 캐시 삭제하기
-# window: appdata>boaming>code>cache 삭제
-# mac:lebrary>application support>code>cachedData
-
-# python -m venv venv
-# source 가상환경이름/Scripts/activate 가상환경 활성화
-#  가상환경 켜기
-# https://liebe97.tistory.com/10
-# f1누르고>interpreter
-# pip install flask pymongo dnspython requests beautifulsoup4
-# flask = localhost에 렌더해서 회원가입하면 아이디,비밀번호를 데이터베이스에 넣는다
-
-# 슬랙질문방
-# https://app.slack.com/client/T043597JK8V/C051UPMBKH7/thread/C051UPMBKH7-1682843802.818039
-# GIT HUB
-# https://hackmd.io/@oW_dDxdsRoSpl0M64Tfg2g/ByfwpNJ-K
-
-# AWS 배포하기
-# deactivate
-# pip install awsebcli > eb --version > python -m pip install --upgrade pip
-# cd deploy
-# pip install -U botocore awscli > eb init
-from flask import Flask,render_template,request,jsonify
+from flask import Flask, render_template, request, jsonify
 app = Flask(__name__)
 
 from pymongo import MongoClient
@@ -32,95 +6,74 @@ import certifi
 # certifi패키지 사용하려면 터미널에 pip install certifi 입력해줘야해.
 
 ca = certifi.where()
-client = MongoClient('mongodb+srv://sparta:0000@cluster0.e4k4r80.mongodb.net/?retryWrites=true&w=majority ', tlsCAFile=ca)
+
+client = MongoClient('mongodb+srv://sparta:test@cluster0.stsxpsg.mongodb.net/?retryWrites=true&w=majority', tlsCAFile=ca)
 db = client.dbsparta
 
-# FETCH = pip install bs4
-import requests
-from bs4 import BeautifulSoup
-
-
+# 경로 지정
 @app.route('/')
 def home():
-   return render_template("index.html")
-
-# @app.route('/mypage')
-# def mypage():
-#    return render_template("mypage.html")
-
-# post 요청 api코드
-@app.route('/test', methods=['POST'])
-def test_post():
-   # 사용자가 적은 정보
-   url_receive = request.form['url_give']
-   weather_receive = request.form['weather_give']
-   comment_receive = request.form['comment_give']
-
-   print(url_receive,weather_receive,comment_receive)
-
-# # FETCH = pip install bs4
-   headers = {'User-Agent' : 'Mozilla/5.0 (Windows NT 10.0; Win64; x64)AppleWebKit/537.36 (KHTML, like Gecko) Chrome/73.0.3683.86 Safari/537.36'}
-   # url_receive 변수 넣어주기 
-   data = requests.get(url_receive,headers=headers)
-   soup = BeautifulSoup(data.text, 'html.parser')
-
-   ogtitle=soup.select_one('meta[property="og:title"]')['content']
-   ogimage=soup.select_one('meta[property="og:image"]')['content']
-   ogdesc=soup.select_one('meta[property="og:description"]')['content']
-
-   print(ogtitle,ogimage,ogdesc)
-
-# # PYMONGO에 넣기
-   doc={        
-               # bs4에서 크롤링한거
-               'title':ogtitle,
-               'image':ogimage,
-               'desc':ogdesc,
-               #  사용자가 인풋에 적은거 
-               'weather':weather_receive,
-               'comment':comment_receive
-                # 별점은?
-            }
-   db.hotplace.insert_one(doc)
-
-   return jsonify({'msg': '저장완료'})
+   return render_template('index.html')
+@app.route('/login')
+def login():
+   return render_template('login.html')
 
 
+# pymongo에 db 저장하기  
+@app.route("/foodlist", methods=["POST"])
+def foodlist_post():
+    weather_receive = request.form["weather_give"]
+    menu_receive = request.form["menu_give"]
+    img_receive = request.form["img_give"]
+    comment_receive = request.form["comment_give"]
 
-# GET 요청 API 코드
-@app.route('/test', methods=['GET'])
-def test_get():
+    doc = {
+        'weather': weather_receive,
+        'menu': menu_receive,
+        'img': img_receive,
+        'comment': comment_receive
+    }
 
-   # title_receive = request.args.get('title_give')
-   # print(title_receive)
+    db.foodlist.insert_one(doc)
+    return jsonify({'msg':'이번엔 진짜 성공!'})
 
-   # 몽고DB에서 여러개 찾기 - 예시 ( _id 값은 제외하고 출력)
-   all_users = list(db.hotplace.find({},{'_id':False}))
-   
-   
-   
-   # return jsonify({'result':'success', 'msg': '이 요청은 GET!'})
-   return jsonify({'result':all_users,'msg': '이 요청은 GET'})
+# 카테고리 상관없이 모든 foodlist 보내주기부분
+@app.route("/foodlist", methods=["GET"])
+def foodlist_get():
+    results = []
+    all_foodlist = list(db.foodlist.find({}))
+    for food in all_foodlist:
+        food['_id'] = str(food['_id'])    ## object_id -> string으로 변환
+        results.append(food)
 
-
-
-
-if __name__ == '__main__':  
-   app.run('0.0.0.0',port=5001,debug=True)
+    return jsonify({'result':results})
 
 
+# weather 카테고리 클릭시 foodlist 보내주기부분
+@app.route("/foodlist/weather", methods=["GET"])
+def foodlistByweather_get():
+    # 🖌1얘랑
+    weather_value = request.args.get('weather_value')
+    print(weather_value)
+    results = []
+    # 🖌2얘 피드백..받음
+    all_foodlist = []
+    if (weather_value == 'sunny'):
+        all_foodlist = list(db.foodlist.find({'weather' : '1'}))
+    elif (weather_value == 'cloudy'):
+        all_foodlist = list(db.foodlist.find({'weather' : '2'}))
+    elif (weather_value == 'rainy'):
+        all_foodlist = list(db.foodlist.find({'weather' : '3'}))
+    elif (weather_value == 'snowy'):
+        all_foodlist = list(db.foodlist.find({'weather' : '4'}))
 
-# URL = "https://map.naver.com/v5/search/%EB%A7%9B%EC%A7%91/place/1747651230?placePath=%3Fentry%253Dpll&n_ad_group_type=10&n_query=%EB%A7%9B%EC%A7%91&c=15,0,0,0,dh"
-# headers = {'User-Agent' : 'Mozilla/5.0 (Windows NT 10.0; Win64; x64)AppleWebKit/537.36 (KHTML, like Gecko) Chrome/73.0.3683.86 Safari/537.36'}
-# data = requests.get(URL, headers=headers)
-# soup = BeautifulSoup(data.text, 'html.parser')
+    print(all_foodlist)
+    for food in all_foodlist:
+        food['_id'] = str(food['_id'])    ## object_id -> string으로 변환
+        results.append(food)
 
-# title=soup.select_one("#_title > span.Fc1rA").text
-# image=soup.select_one("#ibu_1").text
-# address=soup.select_one("#app-root > div > div > div > div:nth-child(6) > div > div.place_section.no_margin.vKA6F > div > div > div.O8qbU.tQY7D > div > a > span.LDgIH").text
+    return jsonify({'result':results})
 
-# # 별점은?
 
-# # title["href"]
-# print()
-
+if __name__ == '__main__':
+   app.run('0.0.0.0', port=5001, debug=True)
