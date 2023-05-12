@@ -81,9 +81,9 @@
       }
     </style>
     <script>
-      // 카테고리 상관없이 모든 foodlist 가져오기
+      // sunny categoroy에 있는 모든 list 가져오기
       function show_order() {
-        fetch('/foodlist')
+        fetch('/cate-sunny-all')
           .then((res) => res.json())
           .then((data) => {
             console.log(data);
@@ -93,13 +93,15 @@
             console.log(rows);
 
             // ! 잠시 none
-            $('.cards  ').empty();
+            $('.cards').empty();
             rows.forEach((a) => {
               console.log(a);
               let menu = a['menu'];
               let img = a['img'];
               let comment = a['comment'];
               let p_id = a['_id'];
+              let foodtype = a['foodtype'];
+              // ! ㄴ 💖 얘 필요하면 쓰셈
               let weather = a['weather'];
               let weather_span = '';
               let weather_i = '';
@@ -120,26 +122,26 @@
               console.log(weather, menu, comment, img, p_id, weather_span, weather_i);
 
               let temp_html = `
-                        <div class="col" id=${p_id}>
-                          <div class="card h-80">
-                            <span class="card-weather ${weather_span}">
-                              <i class="fa-solid fa-${weather_i}"></i>
-                            </span>
-                            <img
-                              src="${img}"
-                              class="card-img-top"
-                              alt="음식 대표사진" />
-
-                            <div class="card-body">
-                              <h5 class="card-title">${menu}</h5>
-                              <p class="card-comment">${comment}</p>
+                            <div class="col" id=${p_id}>
+                              <div class="card h-80">
+                                <span class="card-weather ${weather_span}">
+                                  <i class="fa-solid fa-${weather_i}"></i>
+                                </span>
+                                <img
+                                  src="${img}"
+                                  class="card-img-top"
+                                  alt="음식 대표사진" />
+    
+                                <div class="card-body">
+                                  <h5 class="card-title">${menu}</h5>
+                                  <p class="card-comment">${comment}</p>
+                                </div>
+                                <div class="card-footer more">
+                                  <small class="text-muted"><i class="fa-solid fa-plus"></i>더보기</small>
+                                </div>
+                              </div>
                             </div>
-                            <div class="card-footer more">
-                              <small class="text-muted"><i class="fa-solid fa-plus"></i>더보기</small>
-                            </div>
-                          </div>
-                        </div>
-                        `;
+                            `;
               $('#cards').append(temp_html);
             });
           });
@@ -182,73 +184,74 @@
     <!-- 포스트 박스 -->
     <div class="post-bg" id="post-box">
       <div class="post-box">
-        <div class="post-container">
-          <!-- ✅ form태그 내부가 posting box.. -->
-          <!-- 날씨 선택하기 -->
-          <div class="post-weather-wrapper">
-            <span>날씨를 선택해주세요: </span>
-            <div class="blank-box"></div>
-            <div class="post-select-weather" id="select-weather">
-              <input name="post-select-weather" type="radio" id="select-sun" value="1" />
-              <i class="fa-solid fa-sun" for="select-sun" style="color: #ff9451"></i>
-              <input name="post-select-weather" type="radio" id="select-cloud" value="2" />
-              <i class="fa-solid fa-cloud" for="select-cloud" style="color: #59839e"></i>
-              <input name="post-select-weather" type="radio" id="select-rainy" value="3" />
-              <i class="fa-solid fa-umbrella" for="select-rainy" style="color: #517aff"></i>
-              <input name="post-select-weather" type="radio" id="select-snowy" value="4" />
-              <i class="fa-solid fa-snowflake" for="select-snowy" style="color: #9864f1"></i>
+        <form action="" method="post">
+          <div class="post-container">
+            <!-- ✅ form태그 내부가 posting box.. -->
+            <!-- 날씨 선택하기 -->
+            <div class="post-weather-wrapper">
+              <span>날씨를 선택해주세요: </span>
+              <div class="blank-box"></div>
+              <div class="post-select-weather" id="select-weather">
+                <input name="post-select-weather" type="radio" id="select-sun" value="1" />
+                <i class="fa-solid fa-sun" for="select-sun" style="color: #ff9451"></i>
+                <input name="post-select-weather" type="radio" id="select-cloud" value="2" />
+                <i class="fa-solid fa-cloud" for="select-cloud" style="color: #59839e"></i>
+                <input name="post-select-weather" type="radio" id="select-rainy" value="3" />
+                <i class="fa-solid fa-umbrella" for="select-rainy" style="color: #517aff"></i>
+                <input name="post-select-weather" type="radio" id="select-snowy" value="4" />
+                <i class="fa-solid fa-snowflake" for="select-snowy" style="color: #9864f1"></i>
+              </div>
+            </div>
+            <div class="post-weather-wrapper">
+              <span>음식종류를 선택해주세요: </span>
+              <div class="blank-box"></div>
+              <div class="post-select-weather" id="select-foodtype">
+                <input name="post-select-foodtype" type="radio" id="select-korea" value="2" /><span>한식</span>
+                <input name="post-select-foodtype" type="radio" id="select-western" value="3" /><span>양식</span>
+                <input name="post-select-foodtype" type="radio" id="select-china" value="4" /><span>중식</span>
+                <input name="post-select-foodtype" type="radio" id="select-japan" value="5" /><span>일식</span>
+                <input name="post-select-foodtype" type="radio" id="select-exctype" value="6" /><span>기타</span>
+              </div>
+            </div>
+            <!-- 추천 메뉴명 적기 -->
+            <div class="post-comment">
+              <span>추천하는 메뉴명 : </span>
+              <div class="blank-box"></div>
+              <textarea
+                type="text"
+                name="comment"
+                id="menu_title"
+                placeholder="메뉴명을 입력해주세요"
+                required></textarea>
+            </div>
+            <!-- 음식 사진 URL 첨부 :: 일부러 required 삭제함-->
+            <div class="post-url-wrapper">
+              <span>음식 사진 URL: </span>
+              <input
+                type="pattern "
+                name="url"
+                id="food_img_url"
+                placeholder="메뉴 이미지의 url을 입력해주세요"
+                size="30" />
+            </div>
+            <!-- 코멘트 작성하기 -->
+            <div class="post-comment">
+              <span> 간단한 코멘트 : </span>
+              <div class="blank-box"></div>
+              <textarea
+                type="text"
+                name="comment"
+                id="comment"
+                placeholder="ex : 오늘같은 날씨엔 냉면이 땡기네요~"
+                required></textarea>
+            </div>
+            <!-- POST 버튼 -->
+            <div class="post-btn">
+              <button id="save" onclick="posting()" type="submit" class="btns" style="margin-right: 20px">POST</button>
+              <button class="btns" id="post-close">CLOSE</button>
             </div>
           </div>
-          <div class="post-weather-wrapper">
-            <span>음식종류를 선택해주세요: </span>
-            <div class="blank-box"></div>
-            <div class="post-select-weather" id="select-foodtype">
-              <input name="post-select-foodtype" type="radio" id="select-alltype" value="1" /><span>전체</span>
-              <input name="post-select-foodtype" type="radio" id="select-korea" value="2" /><span>한식</span>
-              <input name="post-select-foodtype" type="radio" id="select-western" value="3" /><span>양식</span>
-              <input name="post-select-foodtype" type="radio" id="select-china" value="4" /><span>중식</span>
-              <input name="post-select-foodtype" type="radio" id="select-japan" value="5" /><span>일식</span>
-              <input name="post-select-foodtype" type="radio" id="select-exctype" value="6" /><span>기타</span>
-            </div>
-          </div>
-          <!-- 추천 메뉴명 적기 -->
-          <div class="post-comment">
-            <span>추천하는 메뉴명 : </span>
-            <div class="blank-box"></div>
-            <textarea
-              type="text"
-              name="comment"
-              id="menu_title"
-              placeholder="메뉴명을 입력해주세요"
-              required></textarea>
-          </div>
-          <!-- 음식 사진 URL 첨부 :: 일부러 required 삭제함-->
-          <div class="post-url-wrapper">
-            <span>음식 사진 URL: </span>
-            <input
-              type="pattern "
-              name="url"
-              id="food_img_url"
-              placeholder="메뉴 이미지의 url을 입력해주세요"
-              size="30" />
-          </div>
-          <!-- 코멘트 작성하기 -->
-          <div class="post-comment">
-            <span> 간단한 코멘트 : </span>
-            <div class="blank-box"></div>
-            <textarea
-              type="text"
-              name="comment"
-              id="comment"
-              placeholder="ex : 오늘같은 날씨엔 냉면이 땡기네요~"
-              required></textarea>
-          </div>
-          <!-- POST 버튼 -->
-          <div class="post-btn">
-            <button id="save" onclick="posting()" type="submit" class="btns" style="margin-right: 20px">POST</button>
-            <button class="btns" id="post-close">CLOSE</button>
-          </div>
-        </div>
+        </form>
       </div>
     </div>
 
@@ -264,11 +267,11 @@
         name="weather"
         id="sunny"
         value="sunny"
-        autocomplete="off" />
+        autocomplete="off"
+        checked />
+
       <label class="btn btn-outline-primary sunny" for="sunny">
-        <a href="/cate-sunny">
-          <i class="fa-solid fa-sun"></i>
-        </a>
+        <i class="fa-solid fa-sun"></i>
       </label>
 
       <input
@@ -280,9 +283,7 @@
         value="cloudy"
         autocomplete="off" />
       <label class="btn btn-outline-primary cloudy" for="cloudy">
-        <a href="/cate-cloudy">
-          <i class="fa-solid fa-cloud"></i>
-        </a>
+        <i class="fa-solid fa-cloud"></i>
       </label>
 
       <input
@@ -294,9 +295,7 @@
         value="rainy"
         autocomplete="off" />
       <label class="btn btn-outline-primary rainy" for="rainy">
-        <a href="/cate-rainy">
-          <i class="fa-solid fa-umbrella"></i>
-        </a>
+        <i class="fa-solid fa-umbrella"></i>
       </label>
 
       <input
@@ -308,9 +307,7 @@
         value="snowy"
         autocomplete="off" />
       <label class="btn btn-outline-primary snowy" for="snowy">
-        <a href="/cate-snowy">
-          <i class="fa-solid fa-snowflake"></i>
-        </a>
+        <i class="fa-solid fa-snowflake"></i>
       </label>
     </div>
 
@@ -318,13 +315,14 @@
     <div class="food-nav" role="group" aria-label="Basic radio toggle button group">
       <div>
         <input
-          onchange="sendData()"
+          onchange="showByfoodtype('sunny', this.value)"
           type="radio"
           class="btn-check weather-btn"
           name="foodtype"
           id="all_type"
           autocomplete="off"
-          value="all_type" />
+          value="all_type"
+          checked />
         <label class="btn btn-outline-primary all" for="all_type">
           <img src="../static/images/전체.png" alt="" />
           <!-- <i class="fa-solid fa-sun"></i> -->
@@ -334,7 +332,7 @@
 
       <div>
         <input
-          onchange="sendData()"
+          onchange="showByfoodtype('sunny', this.value)"
           type="radio"
           class="btn-check weather-btn"
           name="foodtype"
@@ -349,7 +347,7 @@
       </div>
       <div>
         <input
-          onchange="sendData()"
+          onchange="showByfoodtype('sunny', this.value)"
           type="radio"
           class="btn-check weather-btn"
           name="foodtype"
@@ -364,7 +362,7 @@
       </div>
       <div>
         <input
-          onchange="sendData()"
+          onchange="showByfoodtype('sunny', this.value)"
           type="radio"
           class="btn-check weather-btn"
           name="foodtype"
@@ -379,7 +377,7 @@
       </div>
       <div>
         <input
-          onchange="sendData()"
+          onchange="showByfoodtype('sunny', this.value)"
           type="radio"
           class="btn-check weather-btn"
           name="foodtype"
@@ -394,7 +392,7 @@
       </div>
       <div>
         <input
-          onchange="sendData()"
+          onchange="showByfoodtype('sunny', this.value)"
           type="radio"
           class="btn-check weather-btn"
           name="foodtype"

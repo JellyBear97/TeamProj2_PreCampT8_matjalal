@@ -55,9 +55,10 @@ function posting() {
     });
 }
 
-// 카테고리 상관없이 모든 foodlist 가져오기
-function show_order() {
-  fetch('/foodlist')
+// weather 카테고리 클릭시 - foodlist 불러오기
+function showByWeather(weather_value) {
+  // fetch('/foodlist/weather')
+  fetch(`/foodlist/weather?weather_value=${weather_value}`)
     .then((res) => res.json())
     .then((data) => {
       console.log(data);
@@ -66,8 +67,7 @@ function show_order() {
       let rows = data['result'];
       console.log(rows);
 
-      // ! 잠시 none
-      $('.cards  ').empty();
+      $('.cards').empty();
       rows.forEach((a) => {
         console.log(a);
         let menu = a['menu'];
@@ -94,35 +94,36 @@ function show_order() {
         console.log(weather, menu, comment, img, p_id, weather_span, weather_i);
 
         let temp_html = `
-                        <div class="col" id=${p_id}>
-                          <div class="card h-80">
-                            <span class="card-weather ${weather_span}">
-                              <i class="fa-solid fa-${weather_i}"></i>
-                            </span>
-                            <img
-                              src="${img}"
-                              class="card-img-top"
-                              alt="음식 대표사진" />
+                      <div class="col" id=${p_id}>
+                        <div class="card h-80">
+                          <span class="card-weather ${weather_span}">
+                            <i class="fa-solid fa-${weather_i}"></i>
+                          </span>
+                          <img
+                            src="${img}"
+                            class="card-img-top"
+                            alt="음식 대표사진" />
 
-                            <div class="card-body">
-                              <h5 class="card-title">${menu}</h5>
-                              <p class="card-comment">${comment}</p>
-                            </div>
-                            <div class="card-footer more">
-                              <small class="text-muted"><i class="fa-solid fa-plus"></i>더보기</small>
-                            </div>
+                          <div class="card-body">
+                            <h5 class="card-title">${menu}</h5>
+                            <p class="card-comment">${comment}</p>
+                          </div>
+                          <div class="card-footer more">
+                            <small class="text-muted"><i class="fa-solid fa-plus"></i>더보기</small>
                           </div>
                         </div>
-                        `;
+                      </div>
+                      `;
         $('#cards').append(temp_html);
       });
     });
 }
 
-// weather 카테고리 클릭시 - foodlist 불러오기
-function showByWeather(weather_value) {
+// foodtype 카테고리 클릭시 - foodlist 불러오기
+// * 카테고리 버튼에 weather와 foodtype_value 정보 필요!
+function showByfoodtype(weather, foodtype_value) {
   // fetch('/foodlist/weather')
-  fetch(`/foodlist/weather?weather_value=${weather_value}`)
+  fetch(`/cate-${weather}-foodtype?foodtype_value=${foodtype_value}`)
     .then((res) => res.json())
     .then((data) => {
       console.log(data);
@@ -131,8 +132,7 @@ function showByWeather(weather_value) {
       let rows = data['result'];
       console.log(rows);
 
-      // ! 잠시 none
-      $('.cards  ').empty();
+      $('.cards').empty();
       rows.forEach((a) => {
         console.log(a);
         let menu = a['menu'];
