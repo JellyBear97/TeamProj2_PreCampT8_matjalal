@@ -1,7 +1,27 @@
+@import url(./reset.css);
+
+body {
+  width: 100%;
+  height: 100vh;
+  display: hidden;
+  font-family: "nanumsquare";
+  position: relative;
+  margin: 0;
+}
+
+/* 텍스트 입력창 사이즈조절 방지 */
+textarea {
+  resize: none;
+}
+
 /* 이지은 */
 body {
+  width: 100%;
+  height: 100vh;
+  display: hidden;
+  font-family: "nanumsquare";
+  position: relative;
   margin: 0;
-  font-family: 'nanumsquare';
 }
 
 div {
@@ -10,18 +30,20 @@ div {
 
 p {
   font-size: 16px;
+  margin: 0;
 }
 
 h1 {
-  font-size: 35px;
+  font-size: 3vw;
+  margin: 0;
 }
 
-h4 {
-  font-size: 22px;
+h2 {
+  font-size: 2.5vw;
 }
 
 h5 {
-  font-size: 20px;
+  font-size: 1.2vw;
 }
 
 .blank-box {
@@ -30,204 +52,54 @@ h5 {
 }
 
 .btns {
+  width: 100%;
   color: white;
-  background-color: #ff6d60;
+  background-color: var(--main);
   padding: 10px 50px;
-  border: none;
-  border-radius: 20px;
-}
-
-.btns:hover {
-  background-color: #f7d060;
-}
-
-/* nav 로그인/회원가입 버튼 */
-.container-fluid button {
-  background-color: transparent;
-}
-
-.main-nav-blank {
-  margin: auto;
-}
-
-.main-nav-user span {
-  margin-right: 10px;
-  font-weight: 600;
-}
-
-.main-header {
-  padding-top: 60px;
-
-  background-image: url('https://i.pinimg.com/564x/75/28/f6/7528f619a534a54502dfb0b262c96870.jpg');
-  background-position: center;
-  background-size: cover;
-
-  width: 100%;
-  height: 300px;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-}
-
-.main-header button {
-  margin-top: 18px;
-}
-
-.post-bg {
-  display: none;
-  width: 100%;
-  padding: 10px;
-}
-.post-container {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-}
-.post-box {
-  background-color: white;
-  width: 600px;
-  padding: 30px 30px;
-  margin: 30px auto;
-  box-shadow: 0 0 3px 3px lightslategray;
-  border-radius: 20px;
-}
-
-.post-weather-wrapper div {
-  display: inline-block;
-}
-
-.post-url-wrapper,
-.post-weather-wrapper,
-.post-comment {
-  width: 100%;
-  padding: 5px;
-  margin-bottom: 15px;
-  text-align: center;
-}
-
-.post-select-weather {
-  float: right;
-  margin-right: 7px;
-}
-
-.post-url-wrapper input,
-.post-comment textarea {
-  padding: 10px 15px;
-  width: 77%;
-  float: right;
-  margin-right: 7px;
   border-radius: 10px;
-  border: 1px solid grey;
+  border: none;
+  transition: 0.2s;
+}
+.btns:hover {
+  background-color: var(--black);
 }
 
-.post-comment textarea {
-  width: 87%;
-  height: 80px;
-  resize: none;
-}
-
-.post-container button {
-  margin-top: 20px;
-}
-
-.post-select-weather i {
-  font-size: 25px;
-  margin-left: 5px;
-}
-
-.post-select-weather input {
-  margin-left: 15px;
-}
-
-/* 이다혜 */
-* {
-  box-sizing: border-box;
-}
-
-::selection {
-  background: tomato;
-  color: #fff;
-}
-
-.todays-weather {
-  background-color: #f7f7f7;
-  padding: 30px 0;
-  text-align: center;
-}
-
-.todays-weather i {
-  margin-left: 20px;
-  margin-right: 10px;
-}
-
-body > div.weather-nav {
-  width: 100%;
-  margin: 50px auto;
+/* 좌측 navigation 고정 */
+.nav {
+  background: #fff;
+  border-right: 1px solid rgba(87, 87, 87, 0.2);
+  width: 100px;
+  height: 100vh;
+  position: absolute;
   display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  padding: 40px 0;
+  z-index: 10;
 }
-
-body > div.weather-nav > label {
-  width: 60px;
-  height: 60px;
-  border-radius: 50%;
+.navbar-brand {
+  margin: 0 auto;
   display: flex;
   justify-content: center;
   align-items: center;
-  margin-right: 15px;
+  position: relative;
+}
+.navbar-brand::after {
+  content: "오날엔-";
+  display: block;
+  position: absolute;
+  left: 5px;
+  top: -22px;
+  font-size: 18px;
+  color: var(--black);
+  font-family: "PyeongChangPeace-Bold";
+}
+.navbar-brand .logo {
+  width: 80px;
 }
 
-body > div.weather-nav > label:last-child {
-  margin-right: 0;
-}
-
-/* 버튼 기본 색상 지정 */
-:root {
-  --basic: #cdcdcd;
-  --sunny: #ff9451;
-  --cloudy: #59839e;
-  --rainy: #517aff;
-  --snowy: #9864f1;
-}
-
-/* 선택되지 않은 것 */
-.btn-outline-primary {
-  --bs-btn-color: var(--basic);
-  --bs-btn-border-color: var(--basic);
-}
-
-/* 날씨별 색상 */
-.btn-outline-primary.sunny {
-  --bs-btn-hover-bg: var(--sunny);
-  --bs-btn-hover-border-color: var(--sunny);
-  --bs-btn-active-bg: var(--sunny);
-  --bs-btn-active-border-color: var(--sunny);
-}
-
-.btn-outline-primary.cloudy {
-  --bs-btn-hover-bg: var(--cloudy);
-  --bs-btn-hover-border-color: var(--cloudy);
-  --bs-btn-active-bg: var(--cloudy);
-  --bs-btn-active-border-color: var(--cloudy);
-}
-
-.btn-outline-primary.rainy {
-  --bs-btn-hover-bg: var(--rainy);
-  --bs-btn-hover-border-color: var(--rainy);
-  --bs-btn-active-bg: var(--rainy);
-  --bs-btn-active-border-color: var(--rainy);
-}
-
-.btn-outline-primary.snowy {
-  --bs-btn-hover-bg: var(--snowy);
-  --bs-btn-hover-border-color: var(--snowy);
-  --bs-btn-active-bg: var(--snowy);
-  --bs-btn-active-border-color: var(--snowy);
-}
-
+/* nav버튼 hover효과 */
 @keyframes rotate-icon {
   from {
     transform: rotate(0);
@@ -242,16 +114,327 @@ body > div.weather-nav > label:last-child {
   animation: rotate-icon 1s linear infinite;
 }
 
+/* 날씨 선택 nav*/
+.weather-nav {
+  height: 40%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.main-view {
+  background: rgba(87, 87, 87, 1);
+  border: 1px solid rgba(87, 87, 87, 1);
+}
+.main-view img {
+  width: 70%;
+}
+.weather-nav > label {
+  width: 52px;
+  height: 52px;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: 1px solid rgba(87, 87, 87, 0.2);
+  color: var(--basic);
+}
+/* 기본 색상 */
+.btn-check:hover + .btn-outline-primary {
+  border: 1px solid #000;
+  background-color: transparent;
+  box-shadow: rgba(50, 50, 93, 0.25) 0px 13px 27px -5px,
+    rgba(0, 0, 0, 0.3) 0px 8px 16px -8px;
+}
+.btn-check:active + .btn-outline-primary,
+.btn-check:checked + .btn-outline-primary,
+.btn-check:focus + .btn-outline-primary,
+.btn-outline-primary.active,
+.btn-outline-primary.dropdown-toggle.show,
+.btn-outline-primary:active {
+  background-color: transparent;
+  border-color: var(--main);
+
+  box-shadow: rgba(50, 50, 93, 0.25) 0px 13px 27px -5px,
+    rgba(0, 0, 0, 0.3) 0px 8px 16px -8px;
+}
+
+/* 날씨별 색상 - 맑음*/
+.btn-check.main-view:hover + .btn-outline-primary,
+.btn-check.main-view:active + .btn-outline-primary,
+.btn-check.main-view:checked + .btn-outline-primary {
+  background-color: var(--main);
+  border-color: var(--main);
+}
+/* 날씨별 색상 - 맑음*/
+.btn-check.sunny:hover + .btn-outline-primary,
+.btn-check.sunny:active + .btn-outline-primary,
+.btn-check.sunny:checked + .btn-outline-primary {
+  background-color: var(--sunny);
+  border-color: var(--sunny);
+}
+/* 날씨별 색상 - 맑음*/
+.btn-check.cloudy:hover + .btn-outline-primary,
+.btn-check.cloudy:active + .btn-outline-primary,
+.btn-check.cloudy:checked + .btn-outline-primary {
+  background-color: var(--cloudy);
+  border-color: var(--cloudy);
+}
+/* 날씨별 색상 - 비*/
+.btn-check.rainy:hover + .btn-outline-primary,
+.btn-check.rainy:active + .btn-outline-primary,
+.btn-check.rainy:checked + .btn-outline-primary {
+  background-color: var(--rainy);
+  border-color: var(--rainy);
+}
+/* 날씨별 색상 - 눈*/
+.btn-check.snowy:hover + .btn-outline-primary,
+.btn-check.snowy:active + .btn-outline-primary,
+.btn-check.snowy:checked + .btn-outline-primary {
+  background-color: var(--snowy);
+  border-color: var(--snowy);
+}
+/* 회원가입 */
+.user-nav {
+  width: 52px;
+  height: 52px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.user-nav i {
+  color: var(--black);
+}
+.user-nav:hover i {
+  color: var(--main);
+}
+
+/* --컨텐츠 부분-- */
+.content-wrap {
+  width: calc(100% - 100px);
+  height: 100vh;
+  margin-left: 100px;
+  overflow: auto;
+}
+
+/* 헤더 */
+.main-header {
+  width: calc(100% - 100px);
+  padding: 2.5vw 60px;
+  position: fixed;
+  left: 100px;
+  top: 0;
+  background: #fff;
+  border-bottom: 1px solid rgba(87, 87, 87, 0.2);
+  z-index: 10;
+}
+.title {
+  display: flex;
+  justify-content: space-between;
+  padding-right: 60px;
+}
+.main-header-side {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+}
+/* 날씨 표기 */
+.myweather {
+  color: #333;
+}
+/*  음식 추천하기 버튼 */
+.recommend-btn {
+  text-align: center;
+  margin-top: 10px;
+}
+.recommend-btn > button {
+  width: 200px;
+}
+
+/* header 아래 메인 컨텐츠 */
+.main-content {
+  margin-top: 14vw;
+}
+
+/* food-type 선택하기  */
+.food-nav {
+  width: 100%;
+  display: flex;
+  flex-wrap: wrap;
+  margin: 0 auto;
+  justify-content: center;
+}
+.food-nav div {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-right: 2%;
+}
+.food-nav label {
+  width: 4.4vw;
+  height: 4.4vw;
+  border-radius: 50%;
+  border: 1px solid #000;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.food-nav label img {
+  width: 65%;
+}
+@keyframes scale-up {
+  from {
+    transform: scale(1);
+  }
+  to {
+    transform: scale(1.1);
+  }
+}
+
+.food-nav label:hover img {
+  animation: scale-up 0.3s 2 ease-in-out forwards;
+}
+
+.food-nav div p {
+  font-size: 20px;
+  margin-top: 20px;
+}
+
+/* 포스트 form */
+.post-bg {
+  width: calc(100% - 100px);
+  height: 100vh;
+  position: fixed;
+  left: 100px;
+  top: 0;
+  background: rgba(255, 255, 255, 0.9);
+  z-index: 200;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  display: none;
+}
+.post-box {
+  width: 45%;
+  background-color: white;
+  box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+  border-radius: 10px;
+  position: relative;
+  padding: 50px 60px;
+}
+.post-container {
+  display: flex;
+  justify-content: space-between;
+  flex-direction: column;
+}
+.post-wrapper {
+  margin: 10px 0;
+  display: flex;
+}
+.post-wrapper p {
+  width: 250px;
+}
+.post-wrapper label {
+  cursor: pointer;
+}
+/* 입력란 너비값 */
+.post-select-weather,
+.post-select.foodtype-select,
+.post-wrapper.urlwrap input,
+.post-container textarea {
+  width: 80%;
+}
+/* 날씨 선택 */
+.post-select-weather {
+  display: flex;
+  justify-content: space-between;
+}
+.post-select-weather input {
+  display: none;
+}
+.post-select-weather label {
+  width: 20%;
+  height: 70px;
+  border: 1px solid rgba(87, 87, 87, 0.2);
+  border-radius: 6px;
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 5px 0;
+  transition: 0.3s;
+}
+.post-select-weather label:hover {
+  border: 1px solid var(--main);
+}
+.post-select-weather input[type="radio"]:checked + label {
+  border: 1px solid var(--main);
+}
+/* 음식 종류 선택 */
+.post-select.foodtype-select {
+  display: flex;
+  justify-content: space-between;
+  padding: 5px;
+  font-size: 18px;
+}
+.post-select.foodtype-select input {
+  margin-right: 5px;
+}
+/* URL입력란 , 텍스트 입력란 */
+.post-wrapper.urlwrap input,
+.post-container textarea {
+  height: 60px;
+  border: 1px solid var(--black-3);
+  border-radius: 5px;
+}
+
+/* POST 버튼 */
+.post-btn {
+  margin-top: 20px;
+}
+
+/* 닫기 버튼 */
+.close-btn {
+  display: block;
+  width: 30px;
+  height: 30px;
+  text-align: center;
+  position: absolute;
+  right: 20px;
+  top: 20px;
+  cursor: pointer;
+}
+
 /* 게시글 (cards) */
 .cards {
-  width: 85%;
+  width: 100%;
+  padding: 0 3%;
   margin: auto;
 }
-
 .card {
+  width: 90%;
+  height: 440px;
   position: relative;
+  border: none;
+  box-shadow: rgba(50, 50, 93, 0.25) 0px 2px 5px -1px,
+    rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;
+  border-radius: 15px;
+  cursor: pointer;
+  margin: 10px 0;
 }
-
+.card-img-wrap {
+  width: 100%;
+  height: 300px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+  border-radius: 15px 15px 0 0;
+}
+/* 날씨 표시*/
 .card-weather {
   position: absolute;
   right: 10px;
@@ -264,234 +447,176 @@ body > div.weather-nav > label:last-child {
   align-items: center;
   border-radius: 50%;
 
-  color: #fff;
-  font-size: 14px;
+  color: var(--black);
+  background: #fff;
 }
-
-.card-weather.sunny {
-  background-color: var(--sunny);
-}
-
-.card-weather.cloudy {
-  background-color: var(--cloudy);
-}
-
-.card-weather.rainy {
-  background-color: var(--rainy);
-}
-
-.card-weather.snowy {
-  background-color: var(--snowy);
-}
-
 .card-weather i {
   animation: rotate-icon 4s linear infinite;
 }
 
 .card-body {
   padding: 20px;
+  height: 150px;
 }
-
-.card-img,
-.card-img-bottom,
-.card-img-top {
-  height: 100%;
-}
-
 .card-title {
   font-weight: 600;
+  display: inline-block;
+  margin-right: 10px;
 }
-
-.card-address {
-  font-size: 12px;
-  color: #888;
-}
-
 .card-comment {
-  height: 100px;
-  overflow: auto;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
 }
-
-.card-comment::-webkit-scrollbar {
-  display: none;
-}
-
-.card-footer {
-  cursor: pointer;
+.card-body .more {
+  margin-top: 20px;
+  text-align: right;
+  font-size: 14px;
+  color: var(--black-3);
   transition: 0.3s;
 }
-
-.card-footer:hover {
-  background-color: rgba(87, 87, 87, 0.1);
+.card-body .more i {
+  margin-right: 6px;
+}
+.card:hover {
+  box-shadow: rgba(0, 0, 0, 0.3) 0px 18px 36px -18px inset,
+    rgba(50, 50, 93, 0.25) 0px 50px 100px -20px,
+    rgba(0, 0, 0, 0.3) 0px 30px 60px -30px;
+}
+.card:hover .more {
+  color: var(--main);
 }
 
-.text-muted {
+/* 게시물 세부내용 모달창 */
+.post-modal-wrap {
+  width: calc(100% - 100px);
+  height: 100vh;
+  position: fixed;
+  left: 100px;
+  top: 0;
+  background: rgba(0, 0, 0, 0.8);
+  z-index: 200;
+
   display: flex;
-  justify-content: flex-end;
+  justify-content: center;
   align-items: center;
+  display: none;
 }
-
-.text-muted i {
-  margin-right: 3px;
-}
-
-/* 박지혜 모달 */
-.wrapper {
-  background-color: #efefef;
-  border: 1px solid gray;
-  border-radius: 15px;
-  width: 870px;
-  height: 500px;
+.post-modal-content {
+  width: 70%;
+  height: 60%;
+  border: 1px solid var(--black-3);
+  background: #fff;
+  border-radius: 10px;
   display: flex;
-}
-
-.image {
-  width: 497px;
-  height: 500px;
   overflow: hidden;
+  position: relative;
 }
-
-.desc {
-  width: 350px;
-}
-
-.info {
-  padding-left: 10px;
-}
-
-.title {
+.post-modal-img {
+  width: 50%;
+  overflow: hidden;
   display: flex;
+  justify-content: center;
   align-items: center;
+  background: #000;
 }
-
-.star {
+.post-modal-img img {
+  width: 100%;
+}
+.post-modal-desc {
+  width: 50%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+.post-modal-info {
+  padding: 20px;
+  border-bottom: 1px solid var(--black-3);
+  padding-bottom: 10px;
+}
+.post-modal-title {
+  display: flex;
+  align-items: flex-end;
+  margin-bottom: 20px;
+}
+.post-modal-foodtype {
+  font-size: 15px;
+  font-weight: bold;
+  text-align: center;
+  color: var(--main);
   padding: 10px;
 }
 
-.addr {
+.post-modal-comment {
   color: gray;
   margin: 0px;
+  height: auto;
 }
 
-.review {
-  height: 200px;
-}
-
-.comment {
-  width: 373px;
-  border-top: 1px solid black;
-  padding-top: 10px;
-}
-
-.comment-box {
-  padding-left: 10px;
-}
-
-.btn-chat:hover {
+.post-modal-close-btn {
+  position: absolute;
+  right: 0px;
+  top: 0px;
+  z-index: 300;
+  padding: 20px;
   cursor: pointer;
 }
-
-/* 선아님이 올려주신 음식type 아이콘 */
-.food-nav > div {
+.post-modal-textbox {
   display: flex;
-  flex-direction: column;
-
-  align-items: center;
-  margin-right: 10px;
 }
-.food-nav > div > label > img {
-  width: 36px;
-}
-
-body > div.food-nav {
+/* 댓글창 */
+.post-modal-comment-listbox {
+  padding: 20px;
   width: 100%;
-  margin: 50px auto;
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
+  height: 100%;
+  overflow: auto;
 }
-
-body > div.food-nav > div > label {
-  width: 60px;
-  height: 60px;
+.modal-comment-list {
+  margin-bottom: 20px;
+  display: flex;
+  align-items: center;
+}
+.user-avatar {
+  width: 22px;
+  height: 22px;
+  background: var(--main);
   border-radius: 50%;
   display: flex;
   justify-content: center;
   align-items: center;
+  margin-right: 10px;
 }
-
-body > div.food-nav > div > label:last-child {
-  margin-right: 0;
+.user-avatar img {
+  width: 55%;
+  height: 55%;
 }
-
-/* 버튼 기본 색상 지정 */
-:root {
-  --basic: #cdcdcd;
-  --all: #ff9451;
-  --korean: #2ed444;
-  --usa: #517aff;
-  --china: #f16464;
-  --japan: #9864f1;
-  --esc: #f3ff85;
+.user-name {
+  margin-right: 40px;
 }
-
-/* 선택되지 않은 것 */
-.btn-outline-primary {
-  --bs-btn-color: var(--basic);
-  --bs-btn-border-color: var(--basic);
+.post-modal-minicomment {
+  border-top: 1px solid var(--black-3);
 }
-
-/* 나라별 색상 */
-.btn-outline-primary.all {
-  --bs-btn-hover-bg: var(--all);
-  --bs-btn-hover-border-color: var(--all);
-  --bs-btn-active-bg: var(--all);
-  --bs-btn-active-border-color: var(--all);
+.post-modal-minicomment-box {
+  padding: 20px;
+  display: flex;
+  justify-content: space-between;
 }
-
-.btn-outline-primary.korean {
-  --bs-btn-hover-bg: var(--korean);
-  --bs-btn-hover-border-color: var(--korean);
-  --bs-btn-active-bg: var(--korean);
-  --bs-btn-active-border-color: var(--korean);
+.username-input,
+.post-modal-commenttext,
+.post-modal-btn {
+  height: 45px;
 }
-
-.btn-outline-primary.usa {
-  --bs-btn-hover-bg: var(--usa);
-  --bs-btn-hover-border-color: var(--usa);
-  --bs-btn-active-bg: var(--usa);
-  --bs-btn-active-border-color: var(--usa);
+.username-input {
+  width: 140px;
 }
-
-.btn-outline-primary.china {
-  --bs-btn-hover-bg: var(--china);
-  --bs-btn-hover-border-color: var(--china);
-  --bs-btn-active-bg: var(--china);
-  --bs-btn-active-border-color: var(--china);
+.post-modal-commenttext {
+  flex-grow: 1;
+  margin: 0 10px;
 }
-.btn-outline-primary.japan {
-  --bs-btn-hover-bg: var(--japan);
-  --bs-btn-hover-border-color: var(--japan);
-  --bs-btn-active-bg: var(--japan);
-  --bs-btn-active-border-color: var(--japan);
+.post-modal-btn {
+  width: 120px;
 }
-.btn-outline-primary.esc {
-  --bs-btn-hover-bg: var(--esc);
-  --bs-btn-hover-border-color: var(--esc);
-  --bs-btn-active-bg: var(--esc);
-  --bs-btn-active-border-color: var(--esc);
-}
-
-@keyframes rotate-icon {
-  from {
-    transform: rotate(0);
-  }
-
-  to {
-    transform: rotateY(360deg);
-  }
-}
-
-.btn-outline-primary:hover img {
-  animation: rotate-icon 1s linear infinite;
+.post-modal-btn:hover {
+  background-color: var(--main);
+  border: none;
 }

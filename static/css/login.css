@@ -1,0 +1,97 @@
+@import url(./reset.css);
+
+/* 전체 */
+.login-wrap {
+  width: 100%;
+  height: 100vh;
+  display: flex;
+}
+
+.aside-box {
+  width: 45%;
+  background-color: var(--main);
+}
+
+.text-box {
+  padding: 150px 150px;
+}
+
+h1 {
+  font-size: 2.5vw;
+  
+}
+h1 > b {
+  font-size: 5.2vw;
+}
+
+h6 {
+  font-size: 1.2vw;
+  margin-top: 50px;
+  padding-left: 20px;
+  margin-bottom: 30px;
+}
+.no-login {
+  margin-left: 10px;
+  margin-top: 50px;
+  border: none;
+  padding: auto;
+  background-color: var(--rainy);
+  border-radius: 20px;
+  width: 300px;
+  height: 60px;
+  font-size: 0.9vw;
+}
+.no-login a {
+  margin: auto;
+  color: #fff;
+}
+.no-login:hover {
+  background-color: #fff;
+  color: var(--black);
+}
+.no-login:hover a {
+  color: var(--black);
+}
+.main-box {
+  width: 60%;
+  display: flex;
+  flex-direction: column;
+  padding: 10%;
+  text-align: center;
+}
+.login-title {
+  font-size: 3vw;
+}
+.login,
+.id-input {
+  border-radius: 20px;
+  width: 300px;
+  height: 60px;
+}
+.login {
+  border: none;
+  color: #fff;
+  margin: 30px auto;
+  background-color: rgba(248, 51, 61, 0.9);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.login:hover{
+  background: var(--black);
+  color: #fff;
+}
+.login p {
+  margin: 0;
+}
+.id-input {
+  border: none;
+  padding: 10px 20px;
+  background-color: rgba(217, 217, 217, 0.5);
+  margin: 10px;
+  text-align: left;
+}
+.id-input::placeholder {
+  text-align: center;
+}
+/* 

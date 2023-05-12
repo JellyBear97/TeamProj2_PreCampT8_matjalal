@@ -16,6 +16,10 @@ db = client.dbsparta
 def home():
    return render_template('index.html')
 
+@app.route('/main')
+def main():
+   return render_template('index.html')
+
 # login page
 @app.route('/login')
 def login():
@@ -278,6 +282,7 @@ def foodlistByweather_get():
         results.append(food)
 
     return jsonify({'result':results})
+
 
 
 

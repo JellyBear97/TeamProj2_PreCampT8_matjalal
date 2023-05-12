@@ -1,0 +1,31 @@
+@import url("https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700;900&display=swap");
+* {
+  font-family: "Noto Sans KR", sans-serif;
+  box-sizing: border-box;
+}
+@font-face {
+  font-family: "PyeongChangPeace-Bold";
+  src: url("https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2206-02@1.0/PyeongChangPeace-Bold.woff2")
+    format("woff2");
+  font-weight: 700;
+  font-style: normal;
+}
+/* 버튼 기본 색상 지정 */
+:root {
+  --main: #f8333d;
+  --sunny: #ffda1e;
+  --cloudy: #ece3e2;
+  --rainy: #3cbcc0;
+  --snowy: #0d1b46;
+  --basic: rgba(0, 0, 0, 0.8);
+  --black: rgb(50, 50, 50);
+  --black-3: rgba(50, 50, 50, 0.3);
+}
+::selection {
+  background: var(--main);
+  color: #fff;
+}
+a {
+  color: var(--black);
+  text-decoration: none;
+}

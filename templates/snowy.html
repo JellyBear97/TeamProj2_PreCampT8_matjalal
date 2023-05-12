@@ -10,11 +10,13 @@
       href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"
       rel="stylesheet"
       integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC"
-      crossorigin="anonymous" />
+      crossorigin="anonymous"
+    />
     <script
       src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
       integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
-      crossorigin="anonymous"></script>
+      crossorigin="anonymous"
+    ></script>
     <!-- 제이쿼리 라이브러리 -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <!-- 폰트어썸 -->
@@ -23,9 +25,13 @@
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
       integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw=="
       crossorigin="anonymous"
-      referrerpolicy="no-referrer" />
+      referrerpolicy="no-referrer"
+    />
     <!-- css링크 -->
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}" />
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='css/style.css') }}"
+    />
     <link rel="stylesheet" href="../static/css/style.css" />
 
     <!-- 파비콘 (
@@ -39,23 +45,10 @@
     <!-- 구글 폰트 -->
     <link
       href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@200;300;400;500;600;700;900&display=swap"
-      rel="stylesheet" />
+      rel="stylesheet"
+    />
 
     <style>
-      * {
-        font-family: 'Noto Serif KR', serif;
-      }
-      .mypic {
-        width: 100%;
-        height: 300px;
-        background-color: #eee;
-        color: #333;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        justify-content: center;
-      }
-
       .mypost {
         width: 95%;
         max-width: 500px;
@@ -81,418 +74,728 @@
       }
     </style>
     <script>
-      // snowy categoroy에 있는 모든 list 가져오기
+      // 카테고리 상관없이 모든 foodlist 가져오기
       function show_order() {
-        fetch('/cate-snowy-all')
+        fetch("/cate-snowy-all")
           .then((res) => res.json())
           .then((data) => {
             console.log(data);
             // alert(data["msg"]);
 
-            let rows = data['result'];
+            let rows = data["result"];
             console.log(rows);
 
             // ! 잠시 none
-            $('.cards').empty();
+            $(".cards  ").empty();
             rows.forEach((a) => {
               console.log(a);
-              let menu = a['menu'];
-              let img = a['img'];
-              let comment = a['comment'];
-              let p_id = a['_id'];
-              let foodtype = a['foodtype'];
-              // ! ㄴ 💖 얘 필요하면 쓰셈
-              let weather = a['weather'];
-              let weather_span = '';
-              let weather_i = '';
+              let menu = a["menu"];
+              let img = a["img"];
+              let comment = a["comment"];
+              let p_id = a["_id"];
+              let weather = a["weather"];
+              let weather_span = "";
+              let weather_i = "";
               if (weather == 1) {
-                weather_span = 'sunny';
-                weather_i = 'sun';
+                weather_span = "sunny";
+                weather_i = "sun";
               } else if (weather == 2) {
-                weather_span = 'cloudy';
-                weather_i = 'cloud';
+                weather_span = "cloudy";
+                weather_i = "cloud";
               } else if (weather == 3) {
-                weather_span = 'rainy';
-                weather_i = 'umbrella';
+                weather_span = "rainy";
+                weather_i = "umbrella";
               } else if (weather == 4) {
-                weather_span = 'snowy';
-                weather_i = 'snowflake';
+                weather_span = "snowy";
+                weather_i = "snowflake";
               }
 
-              console.log(weather, menu, comment, img, p_id, weather_span, weather_i);
+              console.log(
+                weather,
+                menu,
+                comment,
+                img,
+                p_id,
+                weather_span,
+                weather_i
+              );
 
               let temp_html = `
-                                <div class="col" id=${p_id}>
-                                  <div class="card h-80">
-                                    <span class="card-weather ${weather_span}">
-                                      <i class="fa-solid fa-${weather_i}"></i>
-                                    </span>
-                                    <img
-                                      src="${img}"
-                                      class="card-img-top"
-                                      alt="음식 대표사진" />
-        
-                                    <div class="card-body">
-                                      <h5 class="card-title">${menu}</h5>
-                                      <p class="card-comment">${comment}</p>
-                                    </div>
-                                    <div class="card-footer more">
-                                      <small class="text-muted"><i class="fa-solid fa-plus"></i>더보기</small>
-                                    </div>
-                                  </div>
-                                </div>
-                                `;
-              $('#cards').append(temp_html);
+                    <div class="col" id="card">
+                      <div class="card">
+                        <span class="card-weather">
+                          <i class="fa-solid fa-${weather_i}"></i>
+                        </span>
+                        <div class="card-img-wrap">
+                          <img
+                            src="${img}"
+                            class="card-img"
+                            alt="음식 대표사진" />
+                        </div>
+                        <div class="card-body">
+                          <h5 class="card-title">${menu}</h5>
+                          <span class="card-foodtype">${comment}</span>
+                          <p class="card-comment">오늘 추천하고 싶은 메뉴는 바로바로바로~~~!</p>
+                          <p class="more" id=${p_id}><i class="fa-solid fa-plus"></i>더보기</p>
+                        </div>
+                      </div>
+                    </div>
+                      `;
+              $("#cards").prepend(temp_html);
             });
           });
       }
     </script>
   </head>
   <body>
-    <!-- 날씨 API 테스트 -->
-    <div class="mypic">
-      <p>위치 : <span id="city"></span></p>
-      <p>구름 : <span id="clouds"></span></p>
-      <p>아이콘 : <img id="icon" src="http://openweathermap.org/img/w/02n.png" /></p>
-      <p>온도 : <span id="temp"></span>도</p>
-    </div>
-
     <!-- header + post : 이지은 -->
-    <!-- 상단 고정 -->
-    <div class="main-nav">
-      <nav class="navbar fixed-top bg-white">
-        <div class="container-fluid">
-          <a class="navbar-brand" href="#">오날엔</a>
-          <div class="main-nav-blank"></div>
-          <button><a href="/login">로그인/회원가입</a></button>
-          <div class="main-nav-user">
-            <span>id_easyDOM</span>
-            <img
-              src="https://item.kakaocdn.net/do/fd0050f12764b403e7863c2c03cd4d2d7154249a3890514a43687a85e6b6cc82"
-              width="35px"
-              style="background-color: skyblue; border-radius: 100%"
-              alt="" />
+    <!-- 좌측 nav 고정 -->
+    <div class="nav">
+      <a class="navbar-brand" href="/">
+        <img class="logo" src="../static/images/logo.png" alt="오날엔 로고" />
+      </a>
+      <div
+        class="weather-nav"
+        role="group"
+        aria-label="Basic radio toggle button group"
+      >
+        <input
+          type="radio"
+          class="btn-check weather-btn main-view"
+          name="weather"
+          id="main-view"
+          value="main-view"
+          autocomplete="off"
+        />
+        <label class="btn btn-outline-primary main-view" for="main-view">
+          <a href="/">
+            <img src="../static/images/smile.png" alt="전체보기" />
+          </a>
+        </label>
+
+        <!-- * 아래 input tag에 onchange가 a tag 추가해서 필요는 없을 것 같은데.. 일단 안지운다. -->
+        <input
+          onchange="showByWeather(this.value)"
+          type="radio"
+          class="btn-check weather-btn sunny"
+          name="weather"
+          id="sunny"
+          value="sunny"
+          autocomplete="off"
+        />
+        <label class="btn btn-outline-primary sunny" for="sunny">
+          <a href="/cate-sunny">
+            <i class="fa-solid fa-sun"></i>
+          </a>
+        </label>
+
+        <input
+          onchange="showByWeather(this.value)"
+          type="radio"
+          class="btn-check weather-btn cloudy"
+          name="weather"
+          id="cloudy"
+          value="cloudy"
+          autocomplete="off"
+        />
+        <label class="btn btn-outline-primary cloudy" for="cloudy">
+          <a href="/cate-cloudy">
+            <i class="fa-solid fa-cloud"></i>
+          </a>
+        </label>
+
+        <input
+          onchange="showByWeather(this.value)"
+          type="radio"
+          class="btn-check weather-btn rainy"
+          name="weather"
+          id="rainy"
+          value="rainy"
+          autocomplete="off"
+        />
+        <label class="btn btn-outline-primary rainy" for="rainy">
+          <a href="/cate-rainy">
+            <i class="fa-solid fa-umbrella"></i>
+          </a>
+        </label>
+
+        <input
+          onchange="showByWeather(this.value)"
+          type="radio"
+          class="btn-check weather-btn snowy"
+          name="weather"
+          id="snowy"
+          value="snowy"
+          autocomplete="off"
+          checked
+        />
+        <label class="btn btn-outline-primary snowy" for="snowy">
+          <a href="/cate-snowy">
+            <i class="fa-solid fa-snowflake"></i>
+          </a>
+        </label>
+      </div>
+      <!-- 회원가입 아이콘 -->
+      <a href="/login" class="user-nav">
+        <i class="fa-solid fa-user-pen"></i>
+      </a>
+    </div>
+    <div class="content-wrap">
+      <!-- 헤더 -->
+      <div class="main-header">
+        <div class="title">
+          <h1>
+            오늘같은 날씨에 <br />
+            어울리는 메뉴는 뭘까요?
+          </h1>
+
+          <div class="main-header-side">
+            <!-- 날씨 API 테스트 -->
+            <p class="myweather">
+              <!-- <p>위치 : <span id="city"></span></p> -->
+              <!-- <p>구름 : <span id="clouds"></span></p> -->
+              <span>오늘 날씨 :</span>
+              <img id="icon" src="http://openweathermap.org/img/w/02n.png" />
+              <span><span id="temp"></span>°C</span>
+            </p>
+            <!-- 음식 추천하기 버튼 -->
+            <div class="recommend-btn">
+              <button class="btns" id="post-start">음식 추천하기</button>
+            </div>
           </div>
         </div>
-      </nav>
-    </div>
-    <!-- 헤더 -->
-    <div class="main-header">
-      <h1>오늘같은 날씨엔?</h1>
-      <button class="btns" id="post-start">음식 추천하기</button>
-    </div>
-    <!-- 포스트 박스 -->
-    <div class="post-bg" id="post-box">
-      <div class="post-box">
-        <form action="" method="post">
+      </div>
+
+      <main class="main-content">
+        <!-- food-type 선택하기 -->
+        <div
+          class="food-nav"
+          role="group"
+          aria-label="Basic radio toggle button group"
+        >
+          <div>
+            <input
+              onchange="showByfoodtype('snowy', this.value)"
+              type="radio"
+              class="btn-check foodtype-btn"
+              name="foodtype-nav"
+              id="all-type"
+              autocomplete="off"
+              value="all_type"
+              checked
+            />
+            <label class="btn btn-outline-primary all-type" for="all-type">
+              <img src="../static/images/all-type.png" alt="음식전체분류" />
+              <!-- <i class="fa-solid fa-sun"></i> -->
+            </label>
+            <p>전체</p>
+          </div>
+
+          <div>
+            <input
+              onchange="showByfoodtype('snowy', this.value)"
+              type="radio"
+              class="btn-check foodtype-btn"
+              name="foodtype-nav"
+              id="korean"
+              autocomplete="off"
+              value="korean"
+            />
+            <label class="btn btn-outline-primary korean" for="korean">
+              <img src="../static/images/korean.png" alt="한식" />
+            </label>
+            <p>한식</p>
+          </div>
+          <div>
+            <input
+              onchange="showByfoodtype('snowy', this.value)"
+              type="radio"
+              class="btn-check foodtype-btn"
+              name="foodtype-nav"
+              id="western"
+              autocomplete="off"
+              value="western"
+            />
+            <label class="btn btn-outline-primary western" for="western">
+              <img src="../static/images/western.png" alt="양식" />
+            </label>
+            <p>양식</p>
+          </div>
+          <div>
+            <input
+              onchange="showByfoodtype('snowy', this.value)"
+              type="radio"
+              class="btn-check foodtype-btn"
+              name="foodtype-nav"
+              id="china"
+              autocomplete="off"
+              value="china"
+            />
+            <label class="btn btn-outline-primary china" for="china">
+              <img src="../static/images/china.png" alt="중식" />
+            </label>
+            <p>중식</p>
+          </div>
+          <div>
+            <input
+              onchange="showByfoodtype('snowy', this.value)"
+              type="radio"
+              class="btn-check foodtype-btn"
+              name="foodtype-nav"
+              id="japan"
+              autocomplete="off"
+              value="japan"
+            />
+            <label class="btn btn-outline-primary japan" for="japan">
+              <img src="../static/images/japan.png" alt="일식" />
+            </label>
+            <p>일식</p>
+          </div>
+          <div>
+            <input
+              onchange="showByfoodtype('snowy', this.value)"
+              type="radio"
+              class="btn-check foodtype-btn"
+              name="foodtype-nav"
+              id="esc_type"
+              autocomplete="off"
+              value="esc_type"
+            />
+            <label class="btn btn-outline-primary esc" for="esc_type">
+              <img src="../static/images/esc.png" alt="기타" />
+            </label>
+            <p>기타</p>
+          </div>
+        </div>
+        <!-- 게시글 더미 -->
+        <div id="cards" class="cards row row-cols-1 row-cols-md-4 g-4">
+          <!-- 카드 한개 -->
+          <div class="col" id="card">
+            <div class="card">
+              <span class="card-weather">
+                <i class="fa-solid fa-sun"></i>
+              </span>
+              <div class="card-img-wrap">
+                <img
+                  src="https://i.namu.wiki/i/qFWfOHBd0mx7NmNquwtaSbUjnPumXpk5oi1jxNKpWUsv_eGJe44xm9AePkbhQ6hIxTjMtroFaOFPbhBy0MSbNQ.webp"
+                  class="card-img"
+                  alt="음식 대표사진"
+                />
+              </div>
+              <div class="card-body">
+                <h5 class="card-title">마라탕</h5>
+                <span class="card-foodtype">중식</span>
+                <p class="card-comment">
+                  오늘 추천하고 싶은 메뉴는 바로바로바로~~~!
+                </p>
+                <p class="more"><i class="fa-solid fa-plus"></i>더보기</p>
+              </div>
+            </div>
+          </div>
+          <!-- 카드 한개 -->
+          <div class="col" id="card">
+            <div class="card">
+              <span class="card-weather">
+                <i class="fa-solid fa-sun"></i>
+              </span>
+              <div class="card-img-wrap">
+                <img
+                  src="https://i.namu.wiki/i/qFWfOHBd0mx7NmNquwtaSbUjnPumXpk5oi1jxNKpWUsv_eGJe44xm9AePkbhQ6hIxTjMtroFaOFPbhBy0MSbNQ.webp"
+                  class="card-img"
+                  alt="음식 대표사진"
+                />
+              </div>
+              <div class="card-body">
+                <h5 class="card-title">마라탕</h5>
+                <span class="card-foodtype">중식</span>
+                <p class="card-comment">
+                  오늘 추천하고 싶은 메뉴는 바로바로바로~~~!
+                </p>
+                <p class="more"><i class="fa-solid fa-plus"></i>더보기</p>
+              </div>
+            </div>
+          </div>
+          <!-- 카드 한개 -->
+          <div class="col" id="card">
+            <div class="card">
+              <span class="card-weather">
+                <i class="fa-solid fa-sun"></i>
+              </span>
+              <div class="card-img-wrap">
+                <img
+                  src="https://i.namu.wiki/i/qFWfOHBd0mx7NmNquwtaSbUjnPumXpk5oi1jxNKpWUsv_eGJe44xm9AePkbhQ6hIxTjMtroFaOFPbhBy0MSbNQ.webp"
+                  class="card-img"
+                  alt="음식 대표사진"
+                />
+              </div>
+              <div class="card-body">
+                <h5 class="card-title">마라탕</h5>
+                <span class="card-foodtype">중식</span>
+                <p class="card-comment">
+                  오늘 추천하고 싶은 메뉴는 바로바로바로~~~!
+                </p>
+                <p class="more"><i class="fa-solid fa-plus"></i>더보기</p>
+              </div>
+            </div>
+          </div>
+          <!-- 카드 한개 -->
+          <div class="col" id="card">
+            <div class="card">
+              <span class="card-weather">
+                <i class="fa-solid fa-sun"></i>
+              </span>
+              <div class="card-img-wrap">
+                <img
+                  src="https://i.namu.wiki/i/qFWfOHBd0mx7NmNquwtaSbUjnPumXpk5oi1jxNKpWUsv_eGJe44xm9AePkbhQ6hIxTjMtroFaOFPbhBy0MSbNQ.webp"
+                  class="card-img"
+                  alt="음식 대표사진"
+                />
+              </div>
+              <div class="card-body">
+                <h5 class="card-title">마라탕</h5>
+                <span class="card-foodtype">중식</span>
+                <p class="card-comment">
+                  오늘 추천하고 싶은 메뉴는 바로바로바로~~~!
+                </p>
+                <p class="more"><i class="fa-solid fa-plus"></i>더보기</p>
+              </div>
+            </div>
+          </div>
+          <!-- 카드 한개 -->
+          <div class="col" id="card">
+            <div class="card">
+              <span class="card-weather">
+                <i class="fa-solid fa-sun"></i>
+              </span>
+              <div class="card-img-wrap">
+                <img
+                  src="https://i.namu.wiki/i/qFWfOHBd0mx7NmNquwtaSbUjnPumXpk5oi1jxNKpWUsv_eGJe44xm9AePkbhQ6hIxTjMtroFaOFPbhBy0MSbNQ.webp"
+                  class="card-img"
+                  alt="음식 대표사진"
+                />
+              </div>
+              <div class="card-body">
+                <h5 class="card-title">마라탕</h5>
+                <span class="card-foodtype">중식</span>
+                <p class="card-comment">
+                  오늘 추천하고 싶은 메뉴는 바로바로바로~~~!
+                </p>
+                <p class="more"><i class="fa-solid fa-plus"></i>더보기</p>
+              </div>
+            </div>
+          </div>
+          <!-- 카드 한개 -->
+          <div class="col" id="card">
+            <div class="card">
+              <span class="card-weather">
+                <i class="fa-solid fa-sun"></i>
+              </span>
+              <div class="card-img-wrap">
+                <img
+                  src="https://i.namu.wiki/i/qFWfOHBd0mx7NmNquwtaSbUjnPumXpk5oi1jxNKpWUsv_eGJe44xm9AePkbhQ6hIxTjMtroFaOFPbhBy0MSbNQ.webp"
+                  class="card-img"
+                  alt="음식 대표사진"
+                />
+              </div>
+              <div class="card-body">
+                <h5 class="card-title">마라탕</h5>
+                <span class="card-foodtype">중식</span>
+                <p class="card-comment">
+                  오늘 추천하고 싶은 메뉴는 바로바로바로~~~!
+                </p>
+                <p class="more"><i class="fa-solid fa-plus"></i>더보기</p>
+              </div>
+            </div>
+          </div>
+          <!-- 카드 한개 -->
+          <div class="col" id="card">
+            <div class="card">
+              <span class="card-weather">
+                <i class="fa-solid fa-sun"></i>
+              </span>
+              <div class="card-img-wrap">
+                <img
+                  src="https://i.namu.wiki/i/qFWfOHBd0mx7NmNquwtaSbUjnPumXpk5oi1jxNKpWUsv_eGJe44xm9AePkbhQ6hIxTjMtroFaOFPbhBy0MSbNQ.webp"
+                  class="card-img"
+                  alt="음식 대표사진"
+                />
+              </div>
+              <div class="card-body">
+                <h5 class="card-title">마라탕</h5>
+                <span class="card-foodtype">중식</span>
+                <p class="card-comment">
+                  오늘 추천하고 싶은 메뉴는 바로바로바로~~~!
+                </p>
+                <p class="more"><i class="fa-solid fa-plus"></i>더보기</p>
+              </div>
+            </div>
+          </div>
+          <!-- 카드 한개 -->
+          <div class="col" id="card">
+            <div class="card">
+              <span class="card-weather">
+                <i class="fa-solid fa-sun"></i>
+              </span>
+              <div class="card-img-wrap">
+                <img
+                  src="https://i.namu.wiki/i/qFWfOHBd0mx7NmNquwtaSbUjnPumXpk5oi1jxNKpWUsv_eGJe44xm9AePkbhQ6hIxTjMtroFaOFPbhBy0MSbNQ.webp"
+                  class="card-img"
+                  alt="음식 대표사진"
+                />
+              </div>
+              <div class="card-body">
+                <h5 class="card-title">마라탕</h5>
+                <span class="card-foodtype">중식</span>
+                <p class="card-comment">
+                  오늘 추천하고 싶은 메뉴는 바로바로바로~~~!
+                </p>
+                <p class="more"><i class="fa-solid fa-plus"></i>더보기</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </main>
+
+      <!-- 포스트 박스 모달-->
+      <div class="post-bg" id="post-box">
+        <div class="post-box">
           <div class="post-container">
             <!-- ✅ form태그 내부가 posting box.. -->
             <!-- 날씨 선택하기 -->
-            <div class="post-weather-wrapper">
-              <span>날씨를 선택해주세요: </span>
-              <div class="blank-box"></div>
+            <div class="post-wrapper weatherwrap">
+              <p>날씨를 선택해주세요:</p>
               <div class="post-select-weather" id="select-weather">
-                <input name="post-select-weather" type="radio" id="select-sun" value="1" />
-                <i class="fa-solid fa-sun" for="select-sun" style="color: #ff9451"></i>
-                <input name="post-select-weather" type="radio" id="select-cloud" value="2" />
-                <i class="fa-solid fa-cloud" for="select-cloud" style="color: #59839e"></i>
-                <input name="post-select-weather" type="radio" id="select-rainy" value="3" />
-                <i class="fa-solid fa-umbrella" for="select-rainy" style="color: #517aff"></i>
-                <input name="post-select-weather" type="radio" id="select-snowy" value="4" />
-                <i class="fa-solid fa-snowflake" for="select-snowy" style="color: #9864f1"></i>
+                <input
+                  name="post-select-weather"
+                  type="radio"
+                  id="select-sun"
+                  value="1"
+                />
+                <label for="select-sun">
+                  <i
+                    class="fa-solid fa-sun fa-2xl"
+                    style="color: var(--main)"
+                  ></i>
+                </label>
+                <input
+                  name="post-select-weather"
+                  type="radio"
+                  id="select-cloud"
+                  value="2"
+                />
+                <label for="select-cloud">
+                  <i
+                    class="fa-solid fa-cloud fa-2xl"
+                    style="color: var(--cloudy)"
+                  ></i>
+                </label>
+                <input
+                  name="post-select-weather"
+                  type="radio"
+                  id="select-rainy"
+                  value="3"
+                />
+                <label for="select-rainy">
+                  <i
+                    class="fa-solid fa-umbrella fa-2xl"
+                    style="color: var(--rainy)"
+                  ></i>
+                </label>
+                <input
+                  name="post-select-weather"
+                  type="radio"
+                  id="select-snowy"
+                  value="4"
+                />
+                <label for="select-snowy">
+                  <i
+                    class="fa-solid fa-snowflake fa-2xl"
+                    style="color: var(--snowy)"
+                  ></i>
+                </label>
               </div>
             </div>
-            <div class="post-weather-wrapper">
-              <span>음식종류를 선택해주세요: </span>
-              <div class="blank-box"></div>
-              <div class="post-select-weather" id="select-foodtype">
-                <input name="post-select-foodtype" type="radio" id="select-alltype" value="1" /><span>전체</span>
-                <input name="post-select-foodtype" type="radio" id="select-korea" value="2" /><span>한식</span>
-                <input name="post-select-foodtype" type="radio" id="select-western" value="3" /><span>양식</span>
-                <input name="post-select-foodtype" type="radio" id="select-china" value="4" /><span>중식</span>
-                <input name="post-select-foodtype" type="radio" id="select-japan" value="5" /><span>일식</span>
-                <input name="post-select-foodtype" type="radio" id="select-exctype" value="6" /><span>기타</span>
+            <div class="post-wrapper foodtypewrap">
+              <p>음식종류를 선택해주세요:</p>
+              <div class="post-select foodtype-select" id="select-foodtype">
+                <label for="select-alltype">
+                  <input
+                    name="post-select-foodtype"
+                    type="radio"
+                    id="select-alltype"
+                    value="1"
+                  />
+                  <span>전체</span>
+                </label>
+                <label for="select-korea">
+                  <input
+                    name="post-select-foodtype"
+                    type="radio"
+                    id="select-korea"
+                    value="2"
+                  />
+                  <span>한식</span>
+                </label>
+                <label for="select-western">
+                  <input
+                    name="post-select-foodtype"
+                    type="radio"
+                    id="select-western"
+                    value="3"
+                  />
+                  <span>양식</span>
+                </label>
+                <label for="select-china">
+                  <input
+                    name="post-select-foodtype"
+                    type="radio"
+                    id="select-china"
+                    value="4"
+                  />
+                  <span>중식</span>
+                </label>
+                <label for="select-japan">
+                  <input
+                    name="post-select-foodtype"
+                    type="radio"
+                    id="select-japan"
+                    value="5"
+                  />
+                  <span>일식</span>
+                </label>
+                <label for="select-exctype">
+                  <input
+                    name="post-select-foodtype"
+                    type="radio"
+                    id="select-exctype"
+                    value="6"
+                  />
+                  <span>기타</span>
+                </label>
               </div>
             </div>
             <!-- 추천 메뉴명 적기 -->
-            <div class="post-comment">
-              <span>추천하는 메뉴명 : </span>
-              <div class="blank-box"></div>
+            <div class="post-wrapper menuwrap">
+              <p>추천하는 메뉴명 :</p>
               <textarea
                 type="text"
                 name="comment"
                 id="menu_title"
                 placeholder="메뉴명을 입력해주세요"
-                required></textarea>
+                required
+              ></textarea>
             </div>
             <!-- 음식 사진 URL 첨부 :: 일부러 required 삭제함-->
-            <div class="post-url-wrapper">
-              <span>음식 사진 URL: </span>
+            <div class="post-wrapper urlwrap">
+              <p>음식 사진 URL:</p>
               <input
                 type="pattern "
                 name="url"
                 id="food_img_url"
                 placeholder="메뉴 이미지의 url을 입력해주세요"
-                size="30" />
+                size="30"
+              />
             </div>
             <!-- 코멘트 작성하기 -->
-            <div class="post-comment">
-              <span> 간단한 코멘트 : </span>
-              <div class="blank-box"></div>
+            <div class="post-wrapper post-comment">
+              <p>간단한 코멘트 :</p>
               <textarea
                 type="text"
                 name="comment"
                 id="comment"
                 placeholder="ex : 오늘같은 날씨엔 냉면이 땡기네요~"
-                required></textarea>
+                maxlength="100"
+                required
+              ></textarea>
             </div>
             <!-- POST 버튼 -->
             <div class="post-btn">
-              <button id="save" onclick="posting()" type="submit" class="btns" style="margin-right: 20px">POST</button>
-              <button class="btns" id="post-close">CLOSE</button>
+              <button
+                id="save"
+                onclick="posting()"
+                type="submit"
+                class="btns"
+                style="margin-right: 20px"
+              >
+                POST
+              </button>
+            </div>
+            <!-- POST Close 버튼 -->
+            <span class="close-btn" id="post-close">
+              <i class="fa-solid fa-xmark fa-2xl"></i>
+            </span>
+          </div>
+        </div>
+      </div>
+
+      <!-- 세부 게시물 모달 -->
+      <!-- ! 💛 아래 세부게시물 잠시  style="display: none"로 안보이게 함. -->
+      <div class="post-modal-wrap" style="display: none">
+        <div class="post-modal-content">
+          <div class="post-modal-img">
+            <img
+              src="https://recipe1.ezmember.co.kr/cache/recipe/2017/02/27/59ccdce3c03388a25dfd16e8f44e44491.jpg"
+              alt="스파게티"
+            />
+          </div>
+          <div class="post-modal-desc">
+            <div class="post-modal-info">
+              <div class="post-modal-title">
+                <h2>스파게티</h2>
+                <div class="post-modal-foodtype">양식</div>
+              </div>
+              <p class="post-modal-comment">
+                오늘은 왠지 스파게티가 땡기네요~오늘은 왠지 스파게티가
+                땡기네요~오늘은 왠지 스파게티가 땡기네요~오늘은 왠지 스파게티가
+                땡기네요~오늘은 왠지 스파게티가 땡기네요~오늘은 왠지 스파게티가
+                땡기네요~오늘은 왠지 스파게티가 땡기네요~
+              </p>
+              <br />
+            </div>
+            <!-- 댓글창 -->
+            <div class="post-modal-comment-listbox">
+              <p class="modal-comment-list" id="modal-comment-list">
+                <span class="user-avatar">
+                  <img src="../static/images/smile.png" alt="아이콘" />
+                </span>
+                <span class="user-name">닉네임</span>
+                <span class="user-comment">넘 맛있어요!</span>
+              </p>
+            </div>
+            <!-- 댓글달기 -->
+            <div class="post-modal-minicomment">
+              <form class="post-modal-minicomment-box">
+                <input
+                  class="username-input"
+                  type="text"
+                  id="username"
+                  placeholder="닉네임"
+                />
+                <textarea
+                  class="post-modal-commenttext"
+                  placeholder="댓글 달기!"
+                  id="post-modal-comment"
+                ></textarea>
+                <button
+                  onclick="save_comment()"
+                  type="button"
+                  class="post-modal-btn btn btn-dark"
+                >
+                  게시
+                </button>
+              </form>
             </div>
           </div>
-        </form>
-      </div>
-    </div>
-
-    <!-- 날씨 카테고리 -->
-    <!-- <div class="todays-weather">오늘의 날씨 <i class="fa-solid fa-sun"></i><span id="temp">00 ℃</span></div> -->
-    <!-- *ㄴ 얘(날씨 api)는 최상단에 있길래 잠시 주석처리 -->
-
-    <div class="weather-nav" role="group" aria-label="Basic radio toggle button group">
-      <input
-        onchange="showByWeather(this.value)"
-        type="radio"
-        class="btn-check weather-btn"
-        name="weather"
-        id="sunny"
-        value="sunny"
-        autocomplete="off" />
-      <label class="btn btn-outline-primary sunny" for="sunny">
-        <i class="fa-solid fa-sun"></i>
-      </label>
-
-      <input
-        onchange="showByWeather(this.value)"
-        type="radio"
-        class="btn-check weather-btn"
-        name="weather"
-        id="cloudy"
-        value="cloudy"
-        autocomplete="off" />
-      <label class="btn btn-outline-primary cloudy" for="cloudy">
-        <i class="fa-solid fa-cloud"></i>
-      </label>
-
-      <input
-        onchange="showByWeather(this.value)"
-        type="radio"
-        class="btn-check weather-btn"
-        name="weather"
-        id="rainy"
-        value="rainy"
-        autocomplete="off" />
-      <label class="btn btn-outline-primary rainy" for="rainy">
-        <i class="fa-solid fa-umbrella"></i>
-      </label>
-
-      <input
-        onchange="showByWeather(this.value)"
-        type="radio"
-        class="btn-check weather-btn"
-        name="weather"
-        id="snowy"
-        value="snowy"
-        autocomplete="off"
-        checked />
-      <label class="btn btn-outline-primary snowy" for="snowy">
-        <i class="fa-solid fa-snowflake"></i>
-      </label>
-    </div>
-
-    <!-- 음식 type 카테고리 by 선아님 -->
-    <div class="food-nav" role="group" aria-label="Basic radio toggle button group">
-      <div>
-        <input
-          onchange="showByfoodtype('snowy', this.value)"
-          type="radio"
-          class="btn-check weather-btn"
-          name="foodtype"
-          id="all_type"
-          autocomplete="off"
-          value="all_type"
-          checked />
-        <label class="btn btn-outline-primary all" for="all_type">
-          <img src="../static/images/전체.png" alt="" />
-          <!-- <i class="fa-solid fa-sun"></i> -->
-        </label>
-        <p>전체</p>
-      </div>
-
-      <div>
-        <input
-          onchange="showByfoodtype('snowy', this.value)"
-          type="radio"
-          class="btn-check weather-btn"
-          name="foodtype"
-          id="korean"
-          autocomplete="off"
-          value="korean" />
-        <label class="btn btn-outline-primary korean" for="korean">
-          <img src="../static/images/한식.png" alt="" />
-          <!-- <i class="fa-solid fa-sun"></i> -->
-        </label>
-        <p>한식</p>
-      </div>
-      <div>
-        <input
-          onchange="showByfoodtype('snowy', this.value)"
-          type="radio"
-          class="btn-check weather-btn"
-          name="foodtype"
-          id="western"
-          autocomplete="off"
-          value="western" />
-        <label class="btn btn-outline-primary western" for="western">
-          <img src="../static/images/양식.png" alt="" />
-          <!-- <i class="fa-solid fa-sun"></i> -->
-        </label>
-        <p>양식</p>
-      </div>
-      <div>
-        <input
-          onchange="showByfoodtype('snowy', this.value)"
-          type="radio"
-          class="btn-check weather-btn"
-          name="foodtype"
-          id="china"
-          autocomplete="off"
-          value="china" />
-        <label class="btn btn-outline-primary china" for="china">
-          <img src="../static/images/중식.png" alt="" />
-          <!-- <i class="fa-solid fa-sun"></i> -->
-        </label>
-        <p>중식</p>
-      </div>
-      <div>
-        <input
-          onchange="showByfoodtype('snowy', this.value)"
-          type="radio"
-          class="btn-check weather-btn"
-          name="foodtype"
-          id="japan"
-          autocomplete="off"
-          value="japan" />
-        <label class="btn btn-outline-primary japan" for="japan">
-          <img src="../static/images/일식.png" alt="" />
-          <!-- <i class="fa-solid fa-sun"></i> -->
-        </label>
-        <p>일식</p>
-      </div>
-      <div>
-        <input
-          onchange="showByfoodtype('snowy', this.value)"
-          type="radio"
-          class="btn-check weather-btn"
-          name="foodtype"
-          id="esc_type"
-          autocomplete="off"
-          value="esc_type" />
-        <label class="btn btn-outline-primary esc" for="esc_type">
-          <img src="../static/images/기타.png" alt="" />
-          <!-- <i class="fa-solid fa-sun"></i> -->
-        </label>
-        <p>기타</p>
-      </div>
-    </div>
-
-    <!-- 게시글 더미 -->
-    <div id="cards" class="cards row row-cols-1 row-cols-md-4 g-4">
-      <div class="col">
-        <div class="card h-80">
-          <span class="card-weather sunny">
-            <i class="fa-solid fa-sun"></i>
+          <!-- POST-modal Close 버튼 -->
+          <span class="post-modal-close-btn" id="post-modal-close">
+            <i class="fa-solid fa-xmark fa-2xl"></i>
           </span>
-          <img
-            src="https://i.namu.wiki/i/qFWfOHBd0mx7NmNquwtaSbUjnPumXpk5oi1jxNKpWUsv_eGJe44xm9AePkbhQ6hIxTjMtroFaOFPbhBy0MSbNQ.webp"
-            class="card-img-top"
-            alt="음식 대표사진" />
-
-          <div class="card-body">
-            <h5 class="card-title">마라탕</h5>
-            <p class="card-comment">
-              내용이 비어서 심심한데 코멘트를 넣어보는게 어떨까요~~ 내용이 비어서 심심한데 코멘트를 넣어보는게
-              어떨까요~~
-            </p>
-          </div>
-          <div class="card-footer more">
-            <small class="text-muted"><i class="fa-solid fa-plus"></i>더보기</small>
-          </div>
-        </div>
-      </div>
-      <div class="col">
-        <div class="card h-80">
-          <span class="card-weather rainy">
-            <i class="fa-solid fa-umbrella"></i>
-          </span>
-          <img src="https://via.placeholder.com/300x225.jpg" class="card-img-top" alt="음식점 대표사진" />
-
-          <div class="card-body">
-            <h5 class="card-title">음식 이름</h5>
-            <p class="card-comment">
-              Lorem ipsum dolor sit amet consectetur adipisicing elit. Ipsam delectus quisquam, tempora placeat odit est
-              fuga minus quae explicabo qui quis, debitis modi non asperiores inventore excepturi illo. Animi, mollitia.
-            </p>
-          </div>
-          <div class="card-footer more">
-            <small class="text-muted"><i class="fa-solid fa-plus"></i>더보기</small>
-          </div>
-        </div>
-      </div>
-      <div class="col">
-        <div class="card h-80">
-          <span class="card-weather cloudy">
-            <i class="fa-solid fa-cloud"></i>
-          </span>
-          <img src="https://via.placeholder.com/300x225.jpg" class="card-img-top" alt="음식점 대표사진" />
-
-          <div class="card-body">
-            <h5 class="card-title">음식 이름</h5>
-            <p class="card-comment">
-              Lorem ipsum dolor sit amet consectetur adipisicing elit. Ipsam delectus quisquam, tempora placeat odit est
-              fuga minus quae explicabo qui quis, debitis modi non asperiores inventore excepturi illo. Animi, mollitia.
-            </p>
-          </div>
-          <div class="card-footer more">
-            <small class="text-muted"><i class="fa-solid fa-plus"></i>더보기</small>
-          </div>
-        </div>
-      </div>
-      <div class="col">
-        <div class="card h-80">
-          <span class="card-weather snowy">
-            <i class="fa-solid fa-snowflake"></i>
-          </span>
-          <img src="https://via.placeholder.com/300x225.jpg" class="card-img-top" alt="음식점 대표사진" />
-
-          <div class="card-body">
-            <h5 class="card-title">음식 이름</h5>
-            <p class="card-comment">
-              Lorem ipsum dolor sit amet consectetur adipisicing elit. Ipsam delectus quisquam, tempora placeat odit est
-              fuga minus quae explicabo qui quis, debitis modi non asperiores inventore excepturi illo. Animi, mollitia.
-            </p>
-          </div>
-          <div class="card-footer more">
-            <small class="text-muted"><i class="fa-solid fa-plus"></i>더보기</small>
-          </div>
         </div>
       </div>
     </div>
-
     <!-- js파일 링크 -->
-    <script src="{{ url_for('static', filename='js/script.js') }}"></script>
+    <!-- <script src="{{ url_for('static', filename='js/script.js') }}"></script> -->
     <!-- 아래 활성화하면 js가 두 번 돌아가서 껐습니다. -->
-    <!-- <script src="../static/js/script.js"></script> -->
+    <script src="../static/js/script.js"></script>
   </body>
 </html>
